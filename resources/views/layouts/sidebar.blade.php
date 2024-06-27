@@ -69,7 +69,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="parents" class="menu-link">
+            <a href="/customer" class="menu-link">
               <div>Parents</div>
             </a>
           </li>
