@@ -85,7 +85,6 @@
 <!-- Menu -->
 
     @include('layouts.sidebar')
-    <h1>hello wordkkk</h1>
 <!-- / Menu -->
 
 
