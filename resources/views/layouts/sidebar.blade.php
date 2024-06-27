@@ -25,7 +25,6 @@
     </svg>
   </span>
   </span>
-        <span class="app-brand-text demo menu-text fw-bold ms-2">Materialize</span>
         <span class="app-brand-text demo menu-text fw-bold ms-2">ppp</span>
       </a>
 
