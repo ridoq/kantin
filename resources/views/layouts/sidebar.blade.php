@@ -64,7 +64,7 @@
             </a>
           </li>
           <li class="menu-item">
-            <a href="classes" class="menu-link">
+            <a href="/menu" class="menu-link">
               <div >ppppp</div>
             </a>
           </li>

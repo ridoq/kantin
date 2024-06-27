@@ -13,7 +13,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $menus = menu::all();
+        return view('layouts.menu.index', compact('menus'));
     }
 
     /**
