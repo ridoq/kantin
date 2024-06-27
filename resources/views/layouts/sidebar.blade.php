@@ -59,8 +59,8 @@
 
         <ul class="menu-sub ">
           <li class="menu-item">
-            <a href="teachers" class="menu-link">
-              <div >Teachers</div>
+            <a href="/category" class="menu-link">
+              <div >Categories</div>
             </a>
           </li>
           <li class="menu-item">
