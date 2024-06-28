@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\supplier;
 use App\Models\ingredient;
 use App\Http\Requests\StoreingredientRequest;
 use App\Http\Requests\UpdateingredientRequest;
@@ -14,7 +15,8 @@ class IngredientController extends Controller
     public function index()
     {
         $ingredients = ingredient::all();
-        return view('layouts.ingredient.index', compact('ingredients'));
+        $suppliers = supplier::all();
+        return view('layouts.ingredient.index', compact('ingredients', 'suppliers'));
     }
 
     /**
@@ -30,7 +32,12 @@ class IngredientController extends Controller
      */
     public function store(StoreingredientRequest $request)
     {
-        //
+        ingredient::create([
+            'name' => $request->name,
+            'stock' => $request->stock,
+            'supplier_id' => $request->supplier_id
+        ]);
+        return redirect()->back();
     }
 
     /**

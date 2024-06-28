@@ -3,16 +3,16 @@
     <h3>Tabel menu</h3>
     <!-- Button trigger modal -->
 
-    {{-- <div class="d-flex justify-content-between">
-        <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+    <div class="d-flex justify-content-between">
+        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
             @csrf
             <input type="text" name="keyword" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
-        </form>
+        </form> --}}
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
         </button>
-    </div> --}}
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

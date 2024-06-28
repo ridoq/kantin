@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SearchRequest;
 use App\Models\menu;
 use App\Models\category;
 use App\Http\Requests\StoremenuRequest;
