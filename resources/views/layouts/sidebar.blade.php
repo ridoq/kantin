@@ -41,63 +41,77 @@
 
 
     <ul class="menu-inner py-1" >
-      <!-- Dashboards -->
+        <!-- Dashboards -->
+        <li class="menu-item">
+          <a href="/" class="menu-link">
+            <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
+            <div data-i18n="Dashboard">Dashboard</div>
+          </a>
+        </li>
 
-          <li class="menu-item active">
-            <a href="/" class="menu-link">
-                <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
-                <div data-i18n="Dashboard">Dashboard</div>
-            </a>
-          </li>
-
-      <!-- datas -->
-      <li class="menu-item open ">
-        <a href="" class="menu-link menu-toggle">
+        <!-- datas -->
+        <li class="menu-item open">
+          <a href="#" class="menu-link menu-toggle">
             <i class="menu-icon tf-icons mdi mdi-form-select"></i>
-          <div>Datas</div>
-        </a>
+            <div>Datas</div>
+          </a>
 
-        <ul class="menu-sub ">
-          <li class="menu-item">
-            <a href="/category" class="menu-link">
-              <div >Categories</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/menu" class="menu-link">
-              <div >Menu</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/customer" class="menu-link">
-              <div>customer</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/employee" class="menu-link">
-              <div>Employee</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/transaction" class="menu-link">
-              <div >Transaction</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/ingredient" class="menu-link">
-              <div >Ingredient</div>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="/supplier" class="menu-link">
-              <div >Supplier</div>
-            </a>
-          </li>
-        </ul>
-      </li>
+          <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="/category" class="menu-link">
+                <div>Categories</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/menu" class="menu-link">
+                <div>Menu</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/customer" class="menu-link">
+                <div>Customer</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/employee" class="menu-link">
+                <div>Employee</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/transaction" class="menu-link">
+                <div>Transaction</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/ingredient" class="menu-link">
+                <div>Ingredient</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="/supplier" class="menu-link">
+                <div>Supplier</div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
-    </ul>
+      <script>
+        // Get the current URL path
+        const currentPath = window.location.pathname;
 
+        // Get all the menu links
+        const menuLinks = document.querySelectorAll('.menu-link');
 
-
+        // Loop through the menu links and add the 'active' class to the matching link
+        menuLinks.forEach(link => {
+          if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+            link.parentElement.classList.add('active');
+          } else {
+            link.classList.remove('active');
+            link.parentElement.classList.remove('active');
+          }
+        });
+      </script>
   </aside>

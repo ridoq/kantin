@@ -37,19 +37,19 @@
                             @method('POST')
                             <div class="row">
                                 {{-- col++ --}}
-                                <div class="col-12 mb-3">
-                                    <label for="" class="form-label">Nama Employoee</label>
-                                    <input type="text" name="name" placeholder="Employoee" class="form-control">
+                                <div class="col-lg-6 mb-3">
+                                    <label for="" class="form-label">Nama Pegawai</label>
+                                    <input type="text" name="name" placeholder="Nama Pegawai" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">Nomor Telepon</label>
                                     <input type="number" name="tel" placeholder="Nomor Telepon" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" name="email" placeholder="Email" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">Alamat</label>
                                     <input type="text" name="address" placeholder="Alamat" class="form-control">
                                 </div>
@@ -71,7 +71,7 @@
         <thead>
             <tr>
                 <td>No</td>
-                <td>Nama Employee</td>
+                <td>Nama Pegawai</td>
                 <td>Nomor Telepon</td>
                 <td>Email</td>
                 <td>Alamat</td>
@@ -122,22 +122,22 @@
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class=" col-lg-12 mb-3">
-                                                <label class="form-label">Nama Emplyee</label>
-                                                <input type="text" name="name " placeholder="Emplyoee"
+                                            <div class=" col-lg-6 mb-3">
+                                                <label class="form-label">Nama Pegawai</label>
+                                                <input type="text" name="name" placeholder="Nama Pegawai"
                                                     class="form-control" value="{{ $employee->name }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Telepon</label>
                                                 <input type="number" name="tel" placeholder="telepon"
                                                     class="form-control" value="{{ $employee->tel }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" name="email " placeholder="Email"
                                                     class="form-control" value="{{ $employee->email }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Alamat</label>
                                                 <input type="text" name="address " placeholder="Alamat"
                                                     class="form-control" value="{{ $employee->address }}">

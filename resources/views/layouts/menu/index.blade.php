@@ -4,10 +4,11 @@
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-end">
-        {{-- <form action="" method="get">
+        {{-- <form action="" method="get" class="d-flex w-50  ">
             @csrf
             @method('POST')
-            <input type="text" name="keyword" class="form-control">
+                <input type="text" name="keyword" class="form-control">
+                <button type="submit" name="search" class="btn btn-secondary ms-2">cari</button>
         </form> --}}
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
@@ -22,6 +23,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                {{-- editable --}}
                 <div class="modal-body">
                     <form action="/create/menu" method="post">
                         @csrf
@@ -41,8 +43,9 @@
                                 <label class="form-label">Kategori Menu</label>
                                 <select name="category_id" class="form-select">
                                     @forelse ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option value="{{ $category->id }}"> {{ $category->name }}</option>
                                     @empty
+                                    <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -117,8 +120,7 @@
                                             <label class="form-label">Kategori Menu</label>
                                             <select name="category_id" class="form-select">
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}"
-                                                        {{ $menu->category_id == $category->id ? 'selected' : '' }}>
+                                                    <option value="{{ $category->id }}" {{ $menu->category_id == $category->id ? 'selected' : '' }}>
                                                         {{ $category->name }}
                                                     </option>
                                                 @endforeach

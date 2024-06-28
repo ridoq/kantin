@@ -37,11 +37,11 @@
                             @method('POST')
                             <div class="row">
                                 {{-- col++ --}}
-                                <div class="col-12 mb-3">
+                                <div class="col-6 mb-3">
                                     <label for="" class="form-label">Nama Supplier</label>
                                     <input type="text" name="name" placeholder="Supplier" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-6 mb-3">
                                     <label for="" class="form-label">Nomor Telepon</label>
                                     <input type="number" name="tel" placeholder="Nomor Telepon" class="form-control">
                                 </div>
@@ -116,12 +116,12 @@
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Nama Supplier</label>
                                                 <input type="text" name="name " placeholder="Emplyoee"
                                                     class="form-control" value="{{ $supplier->name }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Telepon</label>
                                                 <input type="number" name="tel" placeholder="telepon"
                                                     class="form-control" value="{{ $supplier->tel }}">
