@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchRequest;
 use App\Models\menu;
+use App\Models\category;
 use App\Http\Requests\StoremenuRequest;
 use App\Http\Requests\UpdatemenuRequest;
-use App\Models\category;
 
 class MenuController extends Controller
 {
@@ -16,7 +17,7 @@ class MenuController extends Controller
     {
         $menus = menu::all();
         $categories = category::all();
-        return view('layouts.menu.index', compact('menus','categories'));
+        return view('layouts.menu.index', compact('menus', 'categories'));
     }
 
     /**
@@ -33,9 +34,9 @@ class MenuController extends Controller
     public function store(StoremenuRequest $request)
     {
         menu::create([
-            'menu'=>$request->menu,
-            'price'=>$request->price,
-            'category_id'=>$request->category_id,
+            'menu' => $request->menu,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
         ]);
         return redirect()->back();
     }
