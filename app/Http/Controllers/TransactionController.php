@@ -13,7 +13,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = transaction::all();
+        return view('layouts.transaction.index', compact('transactions'));
     }
 
     /**

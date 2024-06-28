@@ -13,7 +13,8 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $ingredients = ingredient::all();
+        return view('layouts.ingredient.index', compact('ingredients'));
     }
 
     /**
