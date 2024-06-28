@@ -83,6 +83,16 @@
               <div >Transaction</div>
             </a>
           </li>
+          <li class="menu-item">
+            <a href="/ingredient" class="menu-link">
+              <div >Ingredient</div>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="/supplier" class="menu-link">
+              <div >Supplier</div>
+            </a>
+          </li>
         </ul>
       </li>
 
