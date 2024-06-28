@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('menu_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
+            $table->integer('totalAmount');
+            $table->integer('priceTotal');
+            $table->date('transactionDate');
+            $table->foreignId('employee_id')->constrained()->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();
         });
     }
