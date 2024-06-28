@@ -30,7 +30,13 @@ class CustomerController extends Controller
      */
     public function store(StorecustomerRequest $request)
     {
-        //
+        customer::create([
+            'name' =>$request->name,
+            'tel'  =>$request->tel,
+            'email' =>$request->email,
+            'address' =>$request->address
+        ]);
+        return redirect()->back();
     }
 
     /**

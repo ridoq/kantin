@@ -30,7 +30,10 @@ class CategoryController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        //
+        category::create([
+            'name' => $request->name
+        ]);
+        return redirect()->back();
     }
 
     /**
