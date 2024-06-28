@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\menu;
+use App\Models\customer;
+use App\Models\employee;
 use App\Models\transaction;
 use App\Http\Requests\StoretransactionRequest;
 use App\Http\Requests\UpdatetransactionRequest;
@@ -14,7 +17,10 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = transaction::all();
-        return view('layouts.transaction.index', compact('transactions'));
+        $customers = customer::all();
+        $menus = menu::all();
+        $employees = employee::all();
+        return view('layouts.transaction.index', compact('transactions','customers','menus','employees'));
     }
 
     /**
@@ -29,9 +35,22 @@ class TransactionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoretransactionRequest $request)
-    {
-        //
-    }
+{
+    // Ambil data menu berdasarkan menu_id yang dikirimkan dari request
+    $menu = Menu::findOrFail($request->menu_id);
+
+    // Buat transaksi baru
+    Transaction::create([
+        'customer_id' => $request->customer_id,
+        'menu_id' => $request->menu_id,
+        'totalAmount' => $request->totalAmount,
+        'priceTotal' => $menu->price * $request->totalAmount,
+        'transactionDate' => $request->transactionDate,
+        'employee_id' => $request->employee_id
+    ]);
+
+    return redirect()->back();
+}
 
     /**
      * Display the specified resource.
