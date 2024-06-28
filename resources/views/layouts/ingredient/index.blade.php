@@ -1,4 +1,4 @@
 @extends('dashboard')
 @section('content')
-<h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim dolores recusandae sunt eos culpa quam vero, ad praesentium accusantium consequatur nulla, molestiae cum ut adipisci dolor fugiat quas repudiandae corporis deserunt nisi! Quas, doloribus! Odit magni, assumenda voluptatibus, nulla blanditiis laboriosam beatae sapiente necessitatibus ab enim, exercitationem recusandae. Nemo minus sunt officia et earum laudantium temporibus corporis dicta! Nemo autem non alias. Similique nihil necessitatibus illo ab rem magnam cum, expedita cumque quae voluptatum dolores! Reprehenderit excepturi repellat similique, vitae, laudantium recusandae inventore nulla dolor architecto fuga ratione dolorem fugit, praesentium quas commodi quia mollitia expedita? Eum facere earum nesciunt.</h1>
+
 @endsection

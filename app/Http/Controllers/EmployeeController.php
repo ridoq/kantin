@@ -30,7 +30,13 @@ class EmployeeController extends Controller
      */
     public function store(StoreemployeeRequest $request)
     {
-        //
+        employee::create([
+            'name' => $request->name,
+            'tel' => $request->tel,
+            'email' => $request->email,
+            'address' => $request->address,
+        ]);
+        return redirect()->back();
     }
 
     /**

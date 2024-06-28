@@ -30,7 +30,12 @@ class SupplierController extends Controller
      */
     public function store(StoresupplierRequest $request)
     {
-        //
+        supplier::create([
+            'name' => $request->name,
+            'tel' => $request->tel,
+            'address' => $request->address,
+        ]);
+        return redirect()->back();
     }
 
     /**
