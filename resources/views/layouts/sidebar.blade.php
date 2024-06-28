@@ -65,22 +65,22 @@
           </li>
           <li class="menu-item">
             <a href="/menu" class="menu-link">
-              <div >ppppp</div>
+              <div >Menu</div>
             </a>
           </li>
           <li class="menu-item">
             <a href="/customer" class="menu-link">
-              <div>Parents</div>
+              <div>customer</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="students" class="menu-link" target="_blank">
-              <div>Students</div>
+            <a href="/employee" class="menu-link">
+              <div>Employee</div>
             </a>
           </li>
           <li class="menu-item">
-            <a href="assessments" class="menu-link">
-              <div >Assessment</div>
+            <a href="/transaction" class="menu-link">
+              <div >Transaction</div>
             </a>
           </li>
         </ul>
