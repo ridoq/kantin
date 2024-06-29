@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
+use Exception;
+use PhpParser\Node\Stmt\Catch_;
 
 class CategoryController extends Controller
 {
@@ -65,6 +67,11 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        //
+        try{
+            $category->delete();
+            return redirect()->back()->with('hapus','Data berhasil dihapus');
+        }catch(\Exception $e){
+            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+        }
     }
 }

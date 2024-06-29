@@ -1,5 +1,11 @@
 @extends('dashboard')
 @section('content')
+@if (session('hapus'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('hapus') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 {{-- rule:
 1. cek button trigger modal create dan div modal create data, ubah modal body
 2. cek tbody, ubah database sesuai judul file.
@@ -15,11 +21,11 @@
     {{-- CREATE DATA - modal --}}
 
         {{-- button trigger modal --}}
-        <div class="d-flex justify-content-between">
-            <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+        <div class="d-flex justify-content-end">
+            {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
             @csrf
             <input type="text" name="keyword" class="form-control">
-            <button type="submit" class="btn btn-secondary ms-2">Cari</button>
+            <button type="submit" class="btn btn-secondary ms-2">Cari</button> --}}
         </form>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategory">
                 Tambah Data
@@ -85,7 +91,7 @@
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/category /{{ $category->id }}" method="post">
+                            <form action="delete/category/{{ $category->id }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
