@@ -1,6 +1,6 @@
 @extends('dashboard')
 @section('content')
-@if (@session('status'))
+@if (session('hapus'))
 <div class="alert alert-dismissible alert-danger fade show">
     {{ session('hapus')}}
     <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

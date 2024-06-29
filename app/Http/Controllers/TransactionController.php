@@ -81,6 +81,11 @@ class TransactionController extends Controller
      */
     public function destroy(transaction $transaction)
     {
-        //
+        try{
+            $transaction->delete();
+            return redirect()->back()->with('hapus','Data berhasil dihapus');
+        }catch(\Exception $e){
+            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+        }
     }
 }

@@ -1,5 +1,17 @@
 @extends('dashboard')
 @section('content')
+@if (session('hapus'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('hapus') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('restrict'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('restrict') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
     <h3>Tabel transaksi</h3>
     <!-- Button trigger modal -->
 

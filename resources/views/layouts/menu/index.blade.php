@@ -1,14 +1,26 @@
 @extends('dashboard')
 @section('content')
+@if (session('hapus'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('hapus') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('restrict'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('restrict') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
     <h3>Tabel menu</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between">
-        <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
             @csrf
             <input type="text" name="keyword" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
-        </form>
+        </form> --}}
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
         </button>

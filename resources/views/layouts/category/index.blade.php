@@ -6,6 +6,12 @@
     <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('restrict'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('restrict') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 {{-- rule:
 1. cek button trigger modal create dan div modal create data, ubah modal body
 2. cek tbody, ubah database sesuai judul file.
