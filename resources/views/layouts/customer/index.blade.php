@@ -1,5 +1,11 @@
 @extends('dashboard')
 @section('content')
+@if (@session('status'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('hapus')}}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
 {{-- rule:
 1. cek button trigger modal create dan div modal create data, ubah modal body
 2. cek tbody, ubah database sesuai judul file.
@@ -98,7 +104,7 @@
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/customer /{{ $customer->id }}" method="post">
+                            <form action="delete/customer/{{ $customer->id }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>

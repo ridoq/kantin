@@ -1,5 +1,11 @@
 @extends('dashboard')
 @section('content')
+@if (@session('status'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('hapus')}}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
     <h3>Tabel Ingredient</h3>
     <!-- Button trigger modal -->
 
