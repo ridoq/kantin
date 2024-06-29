@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
-use Exception;
-use PhpParser\Node\Stmt\Catch_;
 
 class CategoryController extends Controller
 {
