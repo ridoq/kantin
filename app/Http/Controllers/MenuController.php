@@ -37,7 +37,7 @@ class MenuController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('add','Data telah berhasil ditambahkan');
     }
 
     /**
@@ -65,12 +65,23 @@ class MenuController extends Controller
             $menu->update([
                 'menu'=>$request->menu,
                 'price'=>$request->price,
-                'category_id'=>$request->category_id,
+                'category_id'=>$request->category_id
             ]);
-            return redirect()->route('category')->with('edit','Data berhasil di update');
+            return redirect()->route('menu')->with('edit','Data berhasil di update');
         }catch(\Exception $e){
-            return redirect()->route('category')->with('unique','Data telah ada sebelumnya');
+            return redirect()->route('menu')->with('unique','Data telah ada sebelumnya');
         }
+
+        // try{
+        //     $menu->update([
+        //         'menu'=>$request->menu,
+        //         'price'=>$request->price,
+        //         'category_id'=>$request->category_id,
+        //     ]);
+        //     return redirect()->route('category')->with('edit','Data berhasil di update');
+        // }catch(\Exception $e){
+        //     return redirect()->route('category')->with('unique','Data telah ada sebelumnya');
+        // }
     }
 
     /**

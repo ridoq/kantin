@@ -22,7 +22,18 @@ class StoremenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'menu'=>['required','unique:menus,menu,except,id'],
+            'price'=>['required','numeric'],
         ];
+    }
+    public function messages()
+    {
+        return [
+            'menu.required'=> 'Kolom menu harus diisi',
+            'menu.unique'=> 'Data Menu telah ada sebelumnya',
+            'price.required'=>'Kolom harga harus diisi',
+            'price.numeric'=>'Kolom harga harus berupa angka',
+        ];
+
     }
 }

@@ -1,17 +1,43 @@
 @extends('dashboard')
 @section('content')
-@if (session('hapus'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('hapus') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if (session('restrict'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('restrict') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+    @if (session('hapus'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('hapus') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('restrict'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('restrict') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('add'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('add') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('unique'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('unique') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('edit'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('edit') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-dismissible alert-danger fade show">
+                {{ $error }}
+                <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
     <h3>Tabel menu</h3>
     <!-- Button trigger modal -->
 
@@ -43,12 +69,12 @@
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Menu</label>
                                 <input type="text" name="menu" placeholder="Menu" class="form-control"
-                                value="{{ old('menu') }}">
+                                    value="{{ old('menu') }}">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Harga Menu</label>
                                 <input type="number" name="price" placeholder="Harga" class="form-control"
-                                value="{{ old('price') }}">
+                                    value="{{ old('price') }}">
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Kategori Menu</label>
@@ -56,7 +82,7 @@
                                     @forelse ($categories as $category)
                                         <option value="{{ $category->id }}"> {{ $category->name }}</option>
                                     @empty
-                                    <option hidden>Tidak ada Data</option>
+                                        <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -124,14 +150,15 @@
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">harga</label>
-                                            <input type="number" name="harga" placeholder="harga" class="form-control"
+                                            <input type="number" name="price" placeholder="harga" class="form-control"
                                                 value="{{ $menu->price }}">
                                         </div>
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">Kategori Menu</label>
                                             <select name="category_id" class="form-select">
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}" {{ $menu->category_id == $category->id ? 'selected' : '' }}>
+                                                    <option value="{{ $category->id }}"
+                                                        {{ $menu->category_id == $category->id ? 'selected' : '' }}>
                                                         {{ $category->name }}
                                                     </option>
                                                 @endforeach

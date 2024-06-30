@@ -22,13 +22,16 @@ class UpdatemenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
+            'menu'=>['required'],
+            'price'=>['required','numeric'],
         ];
     }
     public function messages()
     {
         return [
-            //
+            'menu.required'=> 'Kolom menu harus diisi',
+            'price.required'=>'Kolom harga harus diisi',
+            'price.numeric'=>'Kolom harga harus berupa angka',
         ];
 
     }
