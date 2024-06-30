@@ -49,7 +49,7 @@ class TransactionController extends Controller
         'employee_id' => $request->employee_id
     ]);
 
-    return redirect()->back();
+    return redirect()->back()->with('add','Data telah berhasil ditambahkan');
 }
 
     /**

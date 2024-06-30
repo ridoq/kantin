@@ -6,6 +6,38 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+@if (session('add'))
+<div class="alert alert-dismissible alert-success fade show">
+    {{ session('add')}}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if ($errors->any())
+@foreach ($errors->all() as $error)
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ $error }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endforeach
+@endif
+@if (session('edit'))
+<div class="alert alert-dismissible alert-success fade show">
+    {{ session('edit')}}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('unique'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('unique') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+@if (session('restrict'))
+<div class="alert alert-dismissible alert-danger fade show">
+    {{ session('restrict') }}
+    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
     {{-- rule:
 1. cek button trigger modal create dan div modal create data, ubah modal body
 2. cek tbody, ubah database sesuai judul file.

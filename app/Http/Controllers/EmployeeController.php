@@ -36,7 +36,7 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'address' => $request->address,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('add','data berhasil ditambahkan');
     }
 
     /**
@@ -60,7 +60,17 @@ class EmployeeController extends Controller
      */
     public function update(UpdateemployeeRequest $request, employee $employee)
     {
-        //
+        try {
+            $employee->update([
+                'name' => $request->name,
+                'tel' => $request->tel,
+                'email' => $request->email,
+                'address' => $request->address,
+            ]);
+            return redirect()->back()->with('edit','Data employee berhasil diperbarui.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('unique','Data telah ada sebelumnya');
+        }
     }
 
     /**
