@@ -61,7 +61,16 @@ class MenuController extends Controller
      */
     public function update(UpdatemenuRequest $request, menu $menu)
     {
-        //
+        try{
+            $menu->update([
+                'menu'=>$request->menu,
+                'price'=>$request->price,
+                'category_id'=>$request->category_id,
+            ]);
+            return redirect()->route('category')->with('edit','Data berhasil di update');
+        }catch(\Exception $e){
+            return redirect()->route('category')->with('unique','Data telah ada sebelumnya');
+        }
     }
 
     /**

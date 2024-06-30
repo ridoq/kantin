@@ -1,18 +1,44 @@
 @extends('dashboard')
 @section('content')
-@if (session('hapus'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('hapus') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if (session('restrict'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('restrict') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-{{-- rule:
+    @if (session('hapus'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('hapus') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('add'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('add') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-dismissible alert-danger fade show">
+                {{ $error }}
+                <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
+    @if (session('edit'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('edit') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('unique'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('unique') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('restrict'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('restrict') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    {{-- rule:
 1. cek button trigger modal create dan div modal create data, ubah modal body
 2. cek tbody, ubah database sesuai judul file.
 3. tbody-> variable ygv menampung modelnya menjadi objek. contoh "$categories as $category"
@@ -26,48 +52,48 @@
 
     {{-- CREATE DATA - modal --}}
 
-        {{-- button trigger modal --}}
-        <div class="d-flex justify-content-end">
-            {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+    {{-- button trigger modal --}}
+    <div class="d-flex justify-content-end">
+        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
             @csrf
             <input type="text" name="keyword" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button> --}}
         </form>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategory">
-                Tambah Data
-            </button>
-        </div>
-        {{-- end button create trigger modals --}}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategory">
+            Tambah Data
+        </button>
+    </div>
+    {{-- end button create trigger modals --}}
 
-        <!-- Modal CREATE DATA-->
-        <div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    {{-- ubahable --}}
-                    <div class="modal-body">
-                        <form action="/create/category" method="post">
-                            @csrf
-                            @method('POST')
-                            <div class="row">
-                                {{-- col++ --}}
-                                <div class="col-12 mb-3">
-                                    <label for="" class="form-label">Nama Kategori</label>
-                                    <input type="text" name="name" placeholder="category" class="form-control">
-                                </div>
-                                <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
-                                    <button type="submit" class="btn btn-primary">Tambah</button>
-                                </div>
+    <!-- Modal CREATE DATA-->
+    <div class="modal fade" id="createCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                {{-- ubahable --}}
+                <div class="modal-body">
+                    <form action="/create/category" method="post">
+                        @csrf
+                        @method('POST')
+                        <div class="row">
+                            {{-- col++ --}}
+                            <div class="col-12 mb-3">
+                                <label for="" class="form-label">Nama Kategori</label>
+                                <input type="text" name="name" placeholder="category" class="form-control">
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        {{-- end modal create data --}}
+    </div>
+    {{-- end modal create data --}}
 
 
 
@@ -75,9 +101,9 @@
     <table class="table">
         <thead>
             <tr>
-                <td>No</td>
-                <td>category</td>
-                <td>Aksi</td>
+                <td style="font-weight: bold">No</td>
+                <td style="font-weight: bold">category</td>
+                <td style="font-weight: bold">Aksi</td>
             </tr>
         </thead>
         {{-- ubahable --}}
@@ -97,11 +123,15 @@
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/category/{{ $category->id }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Hapus</button>
-                            </form>
+                            <div class="d-flex justify-content-end">
+                                {{-- button trigger modal edit --}}
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#hapus-{{ $category->id }}">
+                                    Hapus
+                                </button>
+                                {{-- end button trigger modal edit --}}
+                            </div>
+
                             {{-- button delete --}}
                         </div>
                     </td>
@@ -123,7 +153,7 @@
                                         <div class="row">
                                             <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Nama Kategori</label>
-                                                <input type="text" name="name " placeholder="Category"
+                                                <input type="text" name="name" placeholder="Category"
                                                     class="form-control" value="{{ $category->name }}">
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">
@@ -137,8 +167,34 @@
                         </div>
                     </div>
                     {{-- end modal edit --}}
+                    <div class="modal fade" id="hapus-{{ $category->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Apakah anda yakin?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                {{-- ubahable --}}
+                                <div class="modal-body">
+                                    <p>Menghapus kategori ini akan menghapus semua data yang terkait dengannya.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="delete/category/{{ $category->id }}" method="post" >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" data-bs-dismiss="modal"
+                                        aria-label="Close" class="btn btn-secondary">Batal</button>
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @empty
-                {{-- fungsinya: tampilan jika data kosong --}}
+                    {{-- fungsinya: tampilan jika data kosong --}}
                 <tr>
                     <td colspan="15">
                         <div class="d-flex justify-content-center">Data Kosong</div>

@@ -22,7 +22,14 @@ class StorecategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'name' => ['required','unique:categories,name,except,id']
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Kolom nama kategori harus diisi',
+            'name.unique' => 'Data telah ada sebelumnya'
         ];
     }
 }
