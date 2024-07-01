@@ -36,11 +36,11 @@
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between">
-        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+        <form action="" method="get" class="d-flex w-50">
             @csrf
-            <input type="text" name="keyword" class="form-control">
+            <input type="text" name="search" class="form-control" >
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
-        </form> --}}
+        </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
         </button>
@@ -152,7 +152,7 @@
                                             <select name="supplier_id" class="form-select">
                                                 @foreach ($suppliers as $supplier)
                                                     <option value="{{ $supplier->id }}"
-                                                        {{ $supplier->supplier_id == $supplier->id ? 'selected' : '' }}>
+                                                        {{ $ingredient->supplier_id == $supplier->id ? 'selected' : '' }}>
                                                         {{ $supplier->name }}
                                                     </option>
                                                 @endforeach

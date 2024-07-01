@@ -22,7 +22,20 @@ class StoreingredientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=>['required'],
+            'stock'=>['required','integer','min:1'],
+            'supplier_id'=>['required','exists:suppliers,id'],
+        ];
+    }
+    public function messages()
+    {
+        return[
+            'name.required'=>'Kolom nama harus diisi',
+            'stock.required'=>'Kolom stok harus diisi',
+            'stock.integer'=>'Kolom stok harus berupa bilangan bulat',
+            'stock.min'=>'minimal stok yang harus diisi adalah 1',
+            'supplier_id.required'=>'Kolom nama supplier tidak boleh kosong',
+            'supplier_id.exists'=>'supplier yang dipilih tidak valid',
         ];
     }
 }
