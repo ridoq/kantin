@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateemployeeRequest extends FormRequest
@@ -22,9 +23,21 @@ class UpdateemployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:customers,name,except,id'],
-            'tel' => ['required'],
-            'email' => ['required'],
+            'name' => ['required'],
+            'tel' =>
+            [
+                'required',
+                'numeric',
+                'min:0',
+                'min_digits:4',
+                'max_digits:13',
+                Rule::unique('emplyoees', 'tel')
+                ->ignore($this->emplyoees->id)
+            ],
+            'email' => ['required',
+                        Rule::unique('emplyoees', 'email')
+                        ->ignore($this->emplyoee->id)
+                    ],
             'address' => ['required'],
         ];
     }

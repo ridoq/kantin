@@ -68,27 +68,25 @@
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Nama Pelanggan</label>
-                                <select name="customer_id" class="form-select">
+                                <select name="customer_id" class="form-select" required>
                                     @forelse ($customers as $customer)
                                         <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
                                     @empty
-                                        <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Menu</label>
-                                <select name="menu_id" class="form-select">
+                                <select name="menu_id" class="form-select" required>
                                     @forelse ($menus as $menu)
                                         <option value="{{ $menu->id }}"> {{ $menu->name }}</option>
                                     @empty
-                                        <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Jumlah Beli</label>
-                                <input type="number" name="totalAmount" placeholder="Jumlah Beli" class="form-control"
+                                <input type="number" name="totalAmount" placeholder="Jumlah Beli" class="form-control" required
                                     value="{{ old('totalAmount') }}">
                             </div>
                             <div class="col-lg-6 mb-3">
@@ -98,11 +96,10 @@
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Nama Pegawai</label>
-                                <select name="employee_id" class="form-select">
+                                <select name="employee_id" class="form-select" required>
                                     @forelse ($employees as $employee)
                                         <option value="{{ $employee->id }}"> {{ $employee->name }}</option>
                                     @empty
-                                        <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>

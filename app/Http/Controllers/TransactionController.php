@@ -73,7 +73,14 @@ class TransactionController extends Controller
      */
     public function update(UpdatetransactionRequest $request, transaction $transaction)
     {
-        //
+        $transaction->update([
+            'customer_id' => $request->customer_id,
+            'menu_id' => $request->menu_id,
+            'totalAmount' => $request->totalAmount,
+            'priceTotal' => $request->priceTotal,
+            'transactionDate' => $request->transactionDate,
+        ]);
+        return redirect()->back()->with('edit','Data berhasil di update');
     }
 
     /**

@@ -22,7 +22,23 @@ class StoretransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'customer_id' => 'required',
+            'menu_id' => 'required',
+            'totalAmount' => 'required|numeric',
+            'transactionDate' => 'required',
+            'employee_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'customer_id.required' => 'Kolom pelanggan ini harus diisi',
+            'menu_id.required' => 'Kolom menu ini harus diisi',
+            'totalAmount.required' => 'Kolom  jumlah beli ini harus diisi',
+            'totalAmount.numeric' => 'Kolom jumlah beli ini harus berupa angka',
+            'transactionDate.required' => 'Kolom tanggal transaksi ini harus diisi',
+            'employee_id.required' => 'Kolom pegawai ini harus diisi',
         ];
     }
 }

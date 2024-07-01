@@ -22,8 +22,8 @@ class UpdatetransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            
             'totalamount' => 'required|numeric',
-            'priceTotal' => 'required|numeric',
             'transactiondate' => 'required',
         ];
     }
@@ -33,8 +33,6 @@ class UpdatetransactionRequest extends FormRequest
         return [
             'totalamount.required' => 'Kolom ini harus diisi',
             'totalamount.numeric' => 'Kolom ini harus berupa angka',
-            'priceTotal.required' => 'Kolom ini harus diisi',
-            'priceTotal.numeric' => 'Kolom ini harus berupa angka',
             'transactiondate.required' => 'Kolom ini harus diisi',
         ];
     }

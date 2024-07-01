@@ -163,7 +163,7 @@
                                         <div class="row">
                                             <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Nama Customer</label>
-                                                <input type="text" name="name " placeholder="Customer"
+                                                <input type="text" name="name" placeholder="Customer"
                                                     class="form-control" value="{{ $customer->name }}">
                                             </div>
                                             <div class=" col-lg-12 mb-3">
@@ -173,12 +173,12 @@
                                             </div>
                                             <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" name="email " placeholder="Email"
+                                                <input type="email" name="email" placeholder="Email"
                                                     class="form-control" value="{{ $customer->email }}">
                                             </div>
                                             <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Alamat</label>
-                                                <input type="text" name="address " placeholder="Alamat"
+                                                <input type="text" name="address" placeholder="Alamat"
                                                     class="form-control" value="{{ $customer->address }}">
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">

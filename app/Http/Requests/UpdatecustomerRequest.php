@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatecustomerRequest extends FormRequest
@@ -22,9 +23,21 @@ class UpdatecustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:customers,name,except,id'],
-            'tel' => ['required'],
-            'email' => ['required'],
+            'name' => ['required'],
+            'tel' =>
+            [
+                'required',
+                'numeric',
+                'min:0',
+                'min_digits:4',
+                'max_digits:13',
+                Rule::unique('customers', 'tel')
+                ->ignore($this->customer->id)
+            ],
+            'email' => ['required',
+                        Rule::unique('customers', 'email')
+                        ->ignore($this->customer->id)
+                    ],
             'address' => ['required'],
         ];
     }
@@ -32,11 +45,12 @@ class UpdatecustomerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Kolom ini harus diisi',
-            'name.unique' => 'Data telah ada sebelumnya',
-            'tel.required' => 'Kolom ini harus diisi',
-            'email.required' => 'Kolom ini harus diisi',
-            'address.required' => 'Kolom ini harus diisi',
+            'name.required' => 'Kolom nama ini harus diisi',
+            'tel.required' => 'Kolom telefon ini harus diisi',
+            'tel.unique' => 'Data telefon telah ada sebelumnya',
+            'email.required' => 'Kolom email ini harus diisi',
+            'email.unique' => 'Data email telah ada sebelumnya',
+            'address.required' => 'Kolom alamat ini harus diisi',
         ];
     }
 }
