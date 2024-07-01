@@ -31,12 +31,12 @@ class UpdateemployeeRequest extends FormRequest
                 'min:0',
                 'min_digits:4',
                 'max_digits:13',
-                Rule::unique('emplyoees', 'tel')
-                ->ignore($this->emplyoees->id)
+                Rule::unique('employees', 'tel')
+                ->ignore($this->employee->id)
             ],
             'email' => ['required',
                         Rule::unique('emplyoees', 'email')
-                        ->ignore($this->emplyoee->id)
+                        ->ignore($this->employee->id)
                     ],
             'address' => ['required'],
         ];
