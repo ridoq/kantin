@@ -33,9 +33,9 @@ class MenuController extends Controller
     public function store(StoremenuRequest $request)
     {
         menu::create([
-            'menu' => $request->menu,
+            'name' => $request->name,
             'price' => $request->price,
-            'category_id' => $request->category_id,
+            'category_id' => $request->category_id
         ]);
         return redirect()->back()->with('add','Data telah berhasil ditambahkan');
     }
@@ -63,13 +63,13 @@ class MenuController extends Controller
     {
         try{
             $menu->update([
-                'menu'=>$request->menu,
+                'name'=>$request->name,
                 'price'=>$request->price,
                 'category_id'=>$request->category_id
             ]);
             return redirect()->route('menu')->with('edit','Data berhasil di update');
         }catch(\Exception $e){
-            return redirect()->route('menu')->with('unique','Data telah ada sebelumnya');
+
         }
 
         // try{

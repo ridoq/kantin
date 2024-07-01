@@ -18,12 +18,6 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    @if (session('unique'))
-        <div class="alert alert-dismissible alert-danger fade show">
-            {{ session('unique') }}
-            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
     @if (session('edit'))
         <div class="alert alert-dismissible alert-success fade show">
             {{ session('edit') }}
@@ -68,7 +62,7 @@
                         <div class="row">
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Menu</label>
-                                <input type="text" name="menu" placeholder="Menu" class="form-control"
+                                <input type="text" name="name" placeholder="Menu" class="form-control"
                                     value="{{ old('menu') }}">
                             </div>
                             <div class="col-lg-6 mb-3">
@@ -78,11 +72,11 @@
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Kategori Menu</label>
-                                <select name="category_id" class="form-select">
+                                <select name="category_id" class="form-select" required>
                                     @forelse ($categories as $category)
                                         <option value="{{ $category->id }}"> {{ $category->name }}</option>
                                     @empty
-                                        <option hidden>Tidak ada Data</option>
+                                        
                                     @endforelse
                                 </select>
                             </div>
@@ -110,7 +104,7 @@
             @forelse ($menus as $index => $menu)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $menu->menu }}</td>
+                    <td>{{ $menu->name }}</td>
                     <td>{{ $menu->price }}</td>
                     <td>{{ $menu->category->name }}</td>
                     <td>
@@ -145,8 +139,8 @@
                                     <div class="row">
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Menu</label>
-                                            <input type="text" name="menu" placeholder="Menu" class="form-control"
-                                                value="{{ $menu->menu }}">
+                                            <input type="text" name="name" placeholder="Menu" class="form-control"
+                                                value="{{ $menu->name }}">
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">harga</label>

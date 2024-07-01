@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->string('menu')->unique();
+            $table->string('name')->unique();
             $table->integer('price');
             $table->foreignId('category_id')->constrained()->cascadeOnDelete()->restrictOnUpdate();
             $table->timestamps();

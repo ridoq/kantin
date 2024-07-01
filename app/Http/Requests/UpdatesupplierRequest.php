@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatesupplierRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdatesupplierRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,30 @@ class UpdatesupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required'],
+            'tel' => [
+                'required',
+                'numeric',
+                'min:0',
+                'min_digits:4',
+                'max_digits:13',
+                Rule::unique('suppliers', 'tel')
+                ->ignore($this->supplier->id)
+            ],
+            'address' => ['required']
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Kolom nama supplier harus diisi',
+            'tel.required' => 'Kolom telepon harus diisi',
+            'tel.unique' => 'data telepon sudah ada sebelumnya',
+            'tel.numeric' => 'Kolom telepon harus berupa angka',
+            'tel.min_digits' => 'Digit minimal untuk nomor telepon adalah 4 digit',
+            'tel.max_digits' => 'Digit maximal untuk nomor telepon adalah 13 digit',
+            'tel.min' => 'Kolom telepon tidak boleh minus',
+            'address.required' => 'Kolom alamat harus diisi',
         ];
     }
 }

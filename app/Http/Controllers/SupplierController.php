@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\supplier;
 use App\Http\Requests\StoresupplierRequest;
 use App\Http\Requests\UpdatesupplierRequest;
+use Illuminate\Database\QueryException;
 
 class SupplierController extends Controller
 {
@@ -35,7 +36,7 @@ class SupplierController extends Controller
             'tel' => $request->tel,
             'address' => $request->address,
         ]);
-        return redirect()->back();
+        return redirect()->back()->with('add','Data berhasil ditambahkan');
     }
 
     /**
@@ -59,7 +60,16 @@ class SupplierController extends Controller
      */
     public function update(UpdatesupplierRequest $request, supplier $supplier)
     {
-        //
+        try{
+            $supplier->update([
+                'name'=>$request->name,
+                'tel'=>$request->tel,
+                'address'=>$request->address
+            ]);
+            return redirect()->route('supplier')->with('edit','Data berhasil di update');
+        }catch(QueryException $e){
+
+        }
     }
 
     /**

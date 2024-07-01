@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdatemenuRequest extends FormRequest
@@ -22,17 +23,21 @@ class UpdatemenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'menu'=>['required'],
-            'price'=>['required','numeric'],
+            'name' => [
+                'required',
+                Rule::unique('menus','name')->ignore($this->menu->id)
+            ],
+            'price' => ['required', 'numeric', 'min:1'],
         ];
     }
     public function messages()
     {
         return [
-            'menu.required'=> 'Kolom menu harus diisi',
-            'price.required'=>'Kolom harga harus diisi',
-            'price.numeric'=>'Kolom harga harus berupa angka',
+            'name.required' => 'Kolom name harus diisi',
+            'name.unique' => 'Data name telah ada sebelumnya',
+            'price.required' => 'Kolom harga harus diisi',
+            'price.numeric' => 'Kolom harga harus berupa angka',
+            'price.min' => 'Minimal harga menu adalah 1',
         ];
-
     }
 }

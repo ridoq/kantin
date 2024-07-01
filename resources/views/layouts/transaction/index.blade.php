@@ -80,7 +80,7 @@
                                 <label class="form-label">Menu</label>
                                 <select name="menu_id" class="form-select">
                                     @forelse ($menus as $menu)
-                                        <option value="{{ $menu->id }}"> {{ $menu->menu }}</option>
+                                        <option value="{{ $menu->id }}"> {{ $menu->name }}</option>
                                     @empty
                                         <option hidden>Tidak ada Data</option>
                                     @endforelse
@@ -133,7 +133,7 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $transaction->customer->name }}</td>
-                    <td>{{ $transaction->menu->menu }}</td>
+                    <td>{{ $transaction->menu->name }}</td>
                     <td>{{ $transaction->totalAmount }}</td>
                     <td>{{ $transaction->priceTotal }}</td>
                     <td>{{ $transaction->transactionDate }}</td>
@@ -184,7 +184,7 @@
                                                 @foreach ($menus as $menu)
                                                     <option value="{{ $menu->id }}"
                                                         {{ $transaction->menu_id == $menu->id ? 'selected' : '' }}>
-                                                        {{ $menu->menu }}
+                                                        {{ $menu->name }}
                                                     </option>
                                                 @endforeach
                                             </select>

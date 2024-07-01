@@ -1,11 +1,37 @@
 @extends('dashboard')
 @section('content')
-@if (session('hapus'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('hapus')}}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
+    @if (session('hapus'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('hapus') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('restrict'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('restrict') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('add'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('add') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('edit'))
+        <div class="alert alert-dismissible alert-success fade show">
+            {{ session('edit') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-dismissible alert-danger fade show">
+                {{ $error }}
+                <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endforeach
+    @endif
     <h3>Tabel Ingredient</h3>
     <!-- Button trigger modal -->
 
@@ -118,8 +144,8 @@
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Stock</label>
-                                            <input type="number" name="stock" placeholder="harga" class="form-control"
-                                                value="{{ $ingredient->stock }}">
+                                            <input type="number" name="stock" placeholder="harga"
+                                                class="form-control" value="{{ $ingredient->stock }}">
                                         </div>
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">Nama Supllier</label>

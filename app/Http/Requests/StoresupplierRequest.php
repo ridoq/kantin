@@ -22,7 +22,29 @@ class StoresupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required'],
+            'tel' => [
+                'required',
+                'numeric',
+                'min:0',
+                'min_digits:4',
+                'max_digits:13',
+                'unique:suppliers,tel,except,id'
+            ],
+            'address' => ['required']
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Kolom nama supplier harus diisi',
+            'tel.required' => 'Kolom telepon harus diisi',
+            'tel.unique' => 'data telepon sebelumnya sudah ada',
+            'tel.numeric' => 'Kolom telepon harus berupa angka',
+            'tel.min' => 'Kolom telepon tidak boleh minus',
+            'tel.min_digits' => 'Digit minimal untuk nomor telepon adalah 4 digit',
+            'tel.max_digits' => 'Digit maximal untuk nomor telepon adalah 13 digit',
+            'address.required' => 'Kolom alamat harus diisi',
         ];
     }
 }
