@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Http\Requests\StorecategoryRequest;
 use App\Http\Requests\UpdatecategoryRequest;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = category::all();
+        $categories = category::where('name', 'like', "%$request->search%")->get();
         return view('layouts.category.index',compact('categories'));
     }
 

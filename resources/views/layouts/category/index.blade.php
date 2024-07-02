@@ -53,11 +53,11 @@
     {{-- CREATE DATA - modal --}}
 
     {{-- button trigger modal --}}
-    <div class="d-flex justify-content-end">
-        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+    <div class="d-flex justify-content-between">
+        <form action="" method="GET" class="d-flex w-50">
             @csrf
-            <input type="text" name="keyword" class="form-control">
-            <button type="submit" class="btn btn-secondary ms-2">Cari</button> --}}
+            <input type="text" name="search" class="form-control">
+            <button type="submit" class="btn btn-secondary ms-2">Cari</button>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategory">
             Tambah Data

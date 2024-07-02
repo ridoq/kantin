@@ -5,15 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\employee;
 use App\Http\Requests\StoreemployeeRequest;
 use App\Http\Requests\UpdateemployeeRequest;
+use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employees = employee::all();
+        $employees = employee::where('name', 'like', "%$request->search%")
+        ->orWhereRaw("CAST(tel as VARCHAR) like ?", ["%" . $request->search . "%"])
+        ->orWhereRaw("email like ?", ["%" . $request->search . "%"])
+        ->orWhereRaw("address like ?", ["%" . $request->search . "%"])
+        ->get();
         return view('layouts.employee.index', compact('employees'));
     }
 
@@ -36,7 +41,7 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'address' => $request->address,
         ]);
-        return redirect()->back()->with('add','data berhasil ditambahkan');
+        return redirect()->back()->with('add', 'data berhasil ditambahkan');
     }
 
     /**
@@ -67,9 +72,9 @@ class EmployeeController extends Controller
                 'email' => $request->email,
                 'address' => $request->address,
             ]);
-            return redirect()->back()->with('edit','Data employee berhasil diperbarui.');
+            return redirect()->back()->with('edit', 'Data employee berhasil diperbarui.');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('unique','Data telah ada sebelumnya');
+            return redirect()->back()->with('unique', 'Data telah ada sebelumnya');
         }
     }
 
@@ -78,11 +83,11 @@ class EmployeeController extends Controller
      */
     public function destroy(employee $employee)
     {
-        try{
+        try {
             $employee->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
     }
 }

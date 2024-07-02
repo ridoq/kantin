@@ -15,7 +15,10 @@ class IngredientController extends Controller
      */
     public function index(Request $request)
     {
-        $ingredients = ingredient::where('name', 'LIKE', "%$request->search%")->get();
+        $ingredients = ingredient::where('name', 'LIKE', "%$request->search%")
+        ->orWhere('stock', 'LIKE', "%$request->search%")
+        ->orWhereRelation('supplier', 'name', 'LIKE', "%$request->search%")
+        ->get();
         $suppliers = supplier::all();
         return view('layouts.ingredient.index', compact('ingredients', 'suppliers'));
     }

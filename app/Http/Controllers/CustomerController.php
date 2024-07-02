@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\customer;
 use App\Http\Requests\StorecustomerRequest;
 use App\Http\Requests\UpdatecustomerRequest;
+use Illuminate\Http\Request;
+use Termwind\Components\Raw;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $customers = customer::all();
+        $customers = customer::where('name', 'like', "%$request->search%")
+        ->orWhereRaw("CAST(tel as VARCHAR) like ?", ["%".$request->search."%"])
+        ->orWhereRaw("email like ?", ["%".$request->search."%"])
+        ->orWhereRaw("address like ?", ["%".$request->search."%"])
+        ->get();
         return view('layouts.customer.index', compact('customers'));
     }
 
@@ -31,12 +38,12 @@ class CustomerController extends Controller
     public function store(StorecustomerRequest $request)
     {
         customer::create([
-            'name' =>$request->name,
-            'tel'  =>$request->tel,
-            'email' =>$request->email,
-            'address' =>$request->address
+            'name' => $request->name,
+            'tel'  => $request->tel,
+            'email' => $request->email,
+            'address' => $request->address
         ]);
-        return redirect()->back()->with('add','data berhasil ditambahkan');
+        return redirect()->back()->with('add', 'data berhasil ditambahkan');
     }
 
     /**
@@ -78,11 +85,11 @@ class CustomerController extends Controller
      */
     public function destroy(customer $customer)
     {
-        try{
+        try {
             $customer->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
     }
 }
