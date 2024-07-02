@@ -126,6 +126,7 @@
                 <td>Total Beli</td>
                 <td>Total Harga</td>
                 <td>Tanggal Transaksi</td>
+                <td>Aksi</td>
             </tr>
         </thead>
         <tbody>
