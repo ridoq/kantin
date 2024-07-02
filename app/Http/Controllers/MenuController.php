@@ -6,9 +6,12 @@ use App\Models\menu;
 use App\Models\category;
 use App\Http\Requests\StoremenuRequest;
 use App\Http\Requests\UpdatemenuRequest;
+use App\UploadTrait;
 
 class MenuController extends Controller
 {
+    use UploadTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -35,9 +38,10 @@ class MenuController extends Controller
         menu::create([
             'name' => $request->name,
             'price' => $request->price,
-            'category_id' => $request->category_id
+            'category_id' => $request->category_id,
+            'gambar' => $this->upload('gambar', $request->gambar),
         ]);
-        return redirect()->back()->with('add','Data telah berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data telah berhasil ditambahkan');
     }
 
     /**
@@ -61,15 +65,15 @@ class MenuController extends Controller
      */
     public function update(UpdatemenuRequest $request, menu $menu)
     {
-        try{
+        try {
             $menu->update([
-                'name'=>$request->name,
-                'price'=>$request->price,
-                'category_id'=>$request->category_id
+                'name' => $request->name,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+                'gambar' => $this->upload('gambar', $request->gambar)
             ]);
-            return redirect()->route('menu')->with('edit','Data berhasil di update');
-        }catch(\Exception $e){
-
+            return redirect()->route('menu')->with('edit', 'Data berhasil di update');
+        } catch (\Exception $e) {
         }
 
         // try{
@@ -89,11 +93,11 @@ class MenuController extends Controller
      */
     public function destroy(menu $menu)
     {
-        try{
+        try {
             $menu->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
     }
 }

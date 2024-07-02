@@ -112,7 +112,7 @@
           <div class="container-xxl flex-grow-1 container-p-y">
 
 
-<div class="row gy-4">
+<div class="row gy-0">
     @yield('content')
 </div>
 

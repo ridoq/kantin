@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('price');
             $table->foreignId('category_id')->constrained()->cascadeOnDelete()->restrictOnUpdate();
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }

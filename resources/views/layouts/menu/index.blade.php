@@ -36,11 +36,11 @@
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between">
-        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+        <form action="" method="GET" class="d-flex w-50">
             @csrf
             <input type="text" name="keyword" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
-        </form> --}}
+        </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
         </button>
@@ -56,7 +56,7 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/menu" method="post">
+                    <form action="/create/menu" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -75,11 +75,18 @@
                                 <select name="category_id" class="form-select" required>
                                     @forelse ($categories as $category)
                                         <option value="{{ $category->id }}"> {{ $category->name }}</option>
+
                                     @empty
-                                        
-                                    @endforelse
+                                        <option hidden>Tidak ada data</option>
+                                    @endforelse ()
                                 </select>
                             </div>
+                            <div class="col-lg-12 mb-3">
+                                <label class="form-label">Gambar</label>
+                                <input type="text" name="gambar" placeholder="gambar" class="form-control"
+                                    value="{{ old('gambar') }}">
+                            </div>
+
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-secondary">Tambah</button>
                             </div>
@@ -95,15 +102,22 @@
         <thead>
             <tr>
                 <td>No</td>
+                <td>Gambar</td>
                 <td>Menu</td>
                 <td>Harga</td>
                 <td>Kategori Menu</td>
+                <td>aksi</td>
             </tr>
         </thead>
         <tbody>
             @forelse ($menus as $index => $menu)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>
+                        <div class="img"
+                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $menu->gambar) }});">
+                        </div>
+                    </td>
                     <td>{{ $menu->name }}</td>
                     <td>{{ $menu->price }}</td>
                     <td>{{ $menu->category->name }}</td>
@@ -111,7 +125,7 @@
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $menu->id }}">
+                                    data-bs-target="#exampleModal-{{ $menu->id }}" id="edtMenu">
                                     Edit
                                 </button>
                             </div>
@@ -144,8 +158,8 @@
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">harga</label>
-                                            <input type="number" name="price" placeholder="harga" class="form-control"
-                                                value="{{ $menu->price }}">
+                                            <input type="number" name="price" placeholder="harga"
+                                                class="form-control" value="{{ $menu->price }}">
                                         </div>
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">Kategori Menu</label>
@@ -157,6 +171,11 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <label for="gambar" class="form-label">Gambar</label>
+                                            <input type="file" name="gambar" id="gambar" class="form-control"
+                                                value="{{ $menu->gambar }}">
                                         </div>
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                             <button type="submit" class="btn btn-primary">Update</button>

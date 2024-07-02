@@ -24,7 +24,7 @@ class StoremenuRequest extends FormRequest
         return [
             'name'=>['required','unique:menus,name,except,id'],
             'price'=>['required','numeric','min:1'],
-            'category_id'=>['required']
+            'category_id'=>['required','exists:categories,id']
         ];
     }
     public function messages()
@@ -36,6 +36,7 @@ class StoremenuRequest extends FormRequest
             'price.numeric'=>'Kolom harga harus berupa angka',
             'price.min'=>'minimal harga menu adalah 1',
             'category_id.required'=>'Kolom kategori harus diisi',
+            'category_id.exists'=>'Kategori yang dipilih tidak valid',
         ];
 
     }

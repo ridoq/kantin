@@ -1,12 +1,12 @@
 @extends('dashboard')
 @section('content')
-@if (session('hapus'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('hapus') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if (session('add'))
+    @if (session('hapus'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('hapus') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('add'))
         <div class="alert alert-dismissible alert-success fade show">
             {{ session('add') }}
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -32,12 +32,12 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-@if (session('restrict'))
-<div class="alert alert-dismissible alert-danger fade show">
-    {{ session('restrict') }}
-    <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+    @if (session('restrict'))
+        <div class="alert alert-dismissible alert-danger fade show">
+            {{ session('restrict') }}
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <h3>Tabel transaksi</h3>
     <!-- Button trigger modal -->
 
@@ -72,6 +72,7 @@
                                     @forelse ($customers as $customer)
                                         <option value="{{ $customer->id }}"> {{ $customer->name }}</option>
                                     @empty
+                                        <option hidden>Tidak ada data</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -81,13 +82,14 @@
                                     @forelse ($menus as $menu)
                                         <option value="{{ $menu->id }}"> {{ $menu->name }}</option>
                                     @empty
+                                        <option hidden>Tidak ada data</option>
                                     @endforelse
                                 </select>
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Jumlah Beli</label>
-                                <input type="number" name="totalAmount" placeholder="Jumlah Beli" class="form-control" required
-                                    value="{{ old('totalAmount') }}">
+                                <input type="number" name="totalAmount" placeholder="Jumlah Beli" class="form-control"
+                                    required value="{{ old('totalAmount') }}">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Tanggal Transaksi</label>
@@ -100,6 +102,7 @@
                                     @forelse ($employees as $employee)
                                         <option value="{{ $employee->id }}"> {{ $employee->name }}</option>
                                     @empty
+                                        <option hidden>Tidak ada data</option>
                                     @endforelse
                                 </select>
                             </div>
@@ -189,7 +192,7 @@
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Total Beli</label>
                                             <input type="number" name="totalAmount" placeholder="Total Beli"
-                                            class="form-control" value="{{ $transaction->totalAmount }}">
+                                                class="form-control" value="{{ $transaction->totalAmount }}">
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Total Harga</label>
@@ -199,7 +202,7 @@
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Tanggal Transaksi</label>
                                             <input type="date" name="transactionDate" placeholder="Tanggal Transaksi"
-                                            class="form-control" value="{{ $transaction->transactionDate }}">
+                                                class="form-control" value="{{ $transaction->transactionDate }}">
                                         </div>
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">Nama Pegawai</label>
