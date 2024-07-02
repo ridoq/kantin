@@ -56,7 +56,7 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/ingredient" method="post">
+                    <form action="/create/ingredient" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -80,6 +80,10 @@
                                     @endforelse
                                 </select>
                             </div>
+                            <div class="col-lg-12 mb-3">
+                                <label class="form-label">Gambar</label>
+                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
+                            </div>
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-secondary">Tambah</button>
                             </div>
@@ -95,15 +99,22 @@
         <thead>
             <tr>
                 <td>No</td>
+                <td>Gambar</td>
                 <td>Nama</td>
                 <td>Stock</td>
                 <td>Supplier</td>
+                <td>Aksi</td>
             </tr>
         </thead>
         <tbody>
             @forelse ($ingredients as $index => $ingredient)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>
+                        <div class="img"
+                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $ingredient->gambar) }});">
+                        </div>
+                    </td>
                     <td>{{ $ingredient->name }}</td>
                     <td>{{ $ingredient->stock }}</td>
                     <td>{{ $ingredient->supplier->name }}</td>

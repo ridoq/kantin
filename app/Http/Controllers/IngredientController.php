@@ -6,10 +6,12 @@ use App\Models\supplier;
 use App\Models\ingredient;
 use App\Http\Requests\StoreingredientRequest;
 use App\Http\Requests\UpdateingredientRequest;
+use App\UploadTrait;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
+    use UploadTrait;
     /**
      * Display a listing of the resource.
      */
@@ -47,7 +49,8 @@ class IngredientController extends Controller
             ingredient::create([
                 'name' => $request->name,
                 'stock' => $request->stock,
-                'supplier_id' => $request->supplier_id
+                'supplier_id' => $request->supplier_id,
+                'gambar' => $this -> upload('gambar', $request->gambar)
             ]);
         }
         return redirect()->back()->with('success', 'Data berhasil disimpan.');

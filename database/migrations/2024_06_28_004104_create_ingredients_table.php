@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('stock');
             $table->foreignId('supplier_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
+            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
