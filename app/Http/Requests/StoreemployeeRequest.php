@@ -33,8 +33,11 @@ class StoreemployeeRequest extends FormRequest
     {
         return [
             'name.required' => 'Kolom nama ini harus diisi',
-            'tel.required' => 'Kolom telefon ini harus diisi',
-            'tel.unique' => 'Data telefon telah ada sebelumnya',
+            'tel.required' => 'Kolom telepon ini harus diisi',
+            'tel.min' => 'Kolom telepon tidak boleh minus',
+            'tel.min_digits' => 'Nomor telepon minimal harus 4 digit',
+            'tel.max_digits' => 'Nomor telepon maximal harus 13 digit',
+            'tel.unique' => 'Data telepon telah ada sebelumnya',
             'email.required' => 'Kolom email ini harus diisi',
             'email.unique' => 'Data email telah ada sebelumnya',
             'address.required' => 'Kolom alamat ini harus diisi',

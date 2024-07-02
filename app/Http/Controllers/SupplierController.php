@@ -6,15 +6,19 @@ use App\Models\supplier;
 use App\Http\Requests\StoresupplierRequest;
 use App\Http\Requests\UpdatesupplierRequest;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $suppliers = supplier::all();
+        $suppliers = supplier::where('name', 'LIKE', "%$request->search%")
+            ->orWhereRaw('CAST(tel AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->orWhereRaw('address LIKE?', ['%' . $request->search . '%'])
+            ->get();
         return view('layouts.supplier.index', compact('suppliers'));
     }
 
@@ -36,7 +40,7 @@ class SupplierController extends Controller
             'tel' => $request->tel,
             'address' => $request->address,
         ]);
-        return redirect()->back()->with('add','Data berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -60,15 +64,14 @@ class SupplierController extends Controller
      */
     public function update(UpdatesupplierRequest $request, supplier $supplier)
     {
-        try{
+        try {
             $supplier->update([
-                'name'=>$request->name,
-                'tel'=>$request->tel,
-                'address'=>$request->address
+                'name' => $request->name,
+                'tel' => $request->tel,
+                'address' => $request->address
             ]);
-            return redirect()->route('supplier')->with('edit','Data berhasil di update');
-        }catch(QueryException $e){
-
+            return redirect()->route('supplier')->with('edit', 'Data berhasil di update');
+        } catch (QueryException $e) {
         }
     }
 
@@ -77,11 +80,11 @@ class SupplierController extends Controller
      */
     public function destroy(supplier $supplier)
     {
-        try{
+        try {
             $supplier->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
     }
 }

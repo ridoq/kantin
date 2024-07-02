@@ -35,10 +35,10 @@
     <h3>Tabel menu</h3>
     <!-- Button trigger modal -->
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-5">
         <form action="" method="GET" class="d-flex w-50">
             @csrf
-            <input type="text" name="keyword" class="form-control">
+            <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -83,8 +83,7 @@
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Gambar</label>
-                                <input type="text" name="gambar" placeholder="gambar" class="form-control"
-                                    value="{{ old('gambar') }}">
+                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
                             </div>
 
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
@@ -125,7 +124,7 @@
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $menu->id }}" id="edtMenu">
+                                    data-bs-target="#exampleModal-{{ $menu->id }}">
                                     Edit
                                 </button>
                             </div>

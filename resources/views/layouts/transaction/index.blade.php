@@ -41,12 +41,12 @@
     <h3>Tabel transaksi</h3>
     <!-- Button trigger modal -->
 
-    <div class="d-flex justify-content-between">
-        {{-- <form action="{{ route('menus.cari') }}" method="GET" class="d-flex w-50">
+    <div class="d-flex justify-content-between mb-5">
+        <form action="" method="GET" class="d-flex w-50 ">
             @csrf
-            <input type="text" name="keyword" class="form-control">
+            <input type="text" name="search" placeholder="cari data" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
-        </form> --}}
+        </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
         </button>
@@ -121,6 +121,7 @@
         <thead>
             <tr>
                 <td>No</td>
+                <td>kode Transaksi</td>
                 <td>Nama Pelanggan</td>
                 <td>Menu</td>
                 <td>Total Beli</td>
@@ -133,6 +134,7 @@
             @forelse ($transactions as $index => $transaction)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>{{ $transaction->kode_transaksi}}</td>
                     <td>{{ $transaction->customer->name }}</td>
                     <td>{{ $transaction->menu->name }}</td>
                     <td>{{ $transaction->totalAmount }}</td>

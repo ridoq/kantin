@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_transaksi')->unique();
             $table->foreignId('customer_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->foreignId('menu_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->integer('totalAmount');

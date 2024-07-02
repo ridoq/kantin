@@ -7,6 +7,7 @@ use App\Models\category;
 use App\Http\Requests\StoremenuRequest;
 use App\Http\Requests\UpdatemenuRequest;
 use App\UploadTrait;
+use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
@@ -15,10 +16,14 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menus = menu::all();
-        $categories = category::all();
+        $menus = menu::where('name', 'LIKE', "%$request->search%")
+            ->orWhereRaw('CAST(price AS CHAR) LIKE?',['%'. $request->search .'%'])
+            ->orWhereRelation('category','name','LIKE',"%$request->search%")
+            ->get();
+        $categories = Category::all();
+
         return view('layouts.menu.index', compact('menus', 'categories'));
     }
 
