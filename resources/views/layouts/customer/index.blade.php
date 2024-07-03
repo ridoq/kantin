@@ -48,7 +48,7 @@
 6. cek button delete nya,[form action:routenya]
 --}}
     {{-- judul --}}
-    <h3>Tabel Customer</h3>
+    <h3>Tabel Pelanggan</h3>
     {{-- end judul --}}
 
     {{-- CREATE DATA - modal --}}
@@ -81,21 +81,21 @@
                             @method('POST')
                             <div class="row">
                                 {{-- col++ --}}
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-12 mb-3">
                                     <label for="" class="form-label">Nama Customer</label>
                                     <input type="text" name="name" placeholder="Customer" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">Nomor Telepon</label>
                                     <input type="number" name="tel" placeholder="Nomor Telepon" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email" name="email" placeholder="Email" class="form-control">
                                 </div>
-                                <div class="col-12 mb-3">
+                                <div class="col-lg-12 mb-3">
                                     <label for="" class="form-label">Alamat</label>
-                                    <input type="text" name="address" placeholder="Alamat" class="form-control">
+                                    <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control"></textarea>
                                 </div>
                                 <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                     <button type="submit" class="btn btn-primary">Tambah</button>
@@ -171,20 +171,19 @@
                                                 <input type="text" name="name" placeholder="Customer"
                                                     class="form-control" value="{{ $customer->name }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Telepon</label>
                                                 <input type="number" name="tel" placeholder="telepon"
                                                     class="form-control" value="{{ $customer->tel }}">
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
+                                            <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" name="email" placeholder="Email"
                                                     class="form-control" value="{{ $customer->email }}">
                                             </div>
                                             <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Alamat</label>
-                                                <input type="text" name="address" placeholder="Alamat"
-                                                    class="form-control" value="{{ $customer->address }}">
+                                                <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control"> {{ $customer->address }}</textarea>
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">
                                                 <button type="submit" class="btn btn-primary w-25">Update</button>

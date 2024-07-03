@@ -41,7 +41,7 @@
 6. cek button delete nya,[form action:routenya]
 --}}
     {{-- judul --}}
-    <h3>Tabel Supplier</h3>
+    <h3>Tabel Pemasok</h3>
     {{-- end judul --}}
 
     {{-- CREATE DATA - modal --}}

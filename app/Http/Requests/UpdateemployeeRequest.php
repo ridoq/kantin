@@ -35,7 +35,7 @@ class UpdateemployeeRequest extends FormRequest
                 ->ignore($this->employee->id)
             ],
             'email' => ['required',
-                        Rule::unique('emplyoees', 'email')
+                        Rule::unique('employees', 'email')
                         ->ignore($this->employee->id)
                     ],
             'address' => ['required'],
@@ -45,11 +45,11 @@ class UpdateemployeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Kolom ini harus diisi',
+            'name.required' => 'Kolom nama harus diisi',
             'name.unique' => 'Data telah ada sebelumnya',
-            'tel.required' => 'Kolom ini harus diisi',
-            'email.required' => 'Kolom ini harus diisi',
-            'address.required' => 'Kolom ini harus diisi',
+            'tel.required' => 'Kolom telepon harus diisi',
+            'email.required' => 'Kolom email harus diisi',
+            'address.required' => 'Kolom alamat harus diisi',
         ];
     }
 }

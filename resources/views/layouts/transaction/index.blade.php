@@ -38,7 +38,7 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <h3>Tabel transaksi</h3>
+    <h3>Tabel Transaksi</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between mb-5">

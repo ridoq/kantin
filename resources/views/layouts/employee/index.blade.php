@@ -47,7 +47,7 @@
 6. cek button delete nya,[form action:routenya]
 --}}
     {{-- judul --}}
-    <h3>Tabel Employee</h3>
+    <h3>Tabel Pegawai</h3>
     {{-- end judul --}}
 
     {{-- CREATE DATA - modal --}}
@@ -80,7 +80,7 @@
                         @method('POST')
                         <div class="row">
                             {{-- col++ --}}
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">Nama Pegawai</label>
                                 <input type="text" name="name" placeholder="Nama Pegawai" class="form-control">
                             </div>
@@ -92,9 +92,9 @@
                                 <label for="" class="form-label">Email</label>
                                 <input type="email" name="email" placeholder="Email" class="form-control">
                             </div>
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">Alamat</label>
-                                <input type="text" name="address" placeholder="Alamat" class="form-control">
+                                <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control"></textarea>
                             </div>
                             <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
@@ -165,7 +165,7 @@
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class=" col-lg-6 mb-3">
+                                            <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Nama Pegawai</label>
                                                 <input type="text" name="name" placeholder="Nama Pegawai"
                                                     class="form-control" value="{{ $employee->name }}">
@@ -177,13 +177,12 @@
                                             </div>
                                             <div class=" col-lg-6 mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" name="email " placeholder="Email"
+                                                <input type="email" name="email" placeholder="Email"
                                                     class="form-control" value="{{ $employee->email }}">
                                             </div>
-                                            <div class=" col-lg-6 mb-3">
+                                            <div class=" col-lg-12 mb-3">
                                                 <label class="form-label">Alamat</label>
-                                                <input type="text" name="address " placeholder="Alamat"
-                                                    class="form-control" value="{{ $employee->address }}">
+                                                <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control">{{ $employee->address }}</textarea>
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">
                                                 <button type="submit" class="btn btn-primary w-25">Update</button>

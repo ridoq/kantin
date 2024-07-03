@@ -32,7 +32,7 @@
             </div>
         @endforeach
     @endif
-    <h3>Tabel menu</h3>
+    <h3>Tabel Menu</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between mb-5">
