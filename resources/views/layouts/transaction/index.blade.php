@@ -62,7 +62,7 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/transaction" method="post">
+                    <form action="/create/transaction" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -106,6 +106,10 @@
                                     @endforelse
                                 </select>
                             </div>
+                            <div class="col-lg-12 mb-3">
+                                <label class="form-label">Gambar</label>
+                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
+                            </div>
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-secondary">Tambah</button>
                             </div>
@@ -122,6 +126,7 @@
             <tr>
                 <td>No</td>
                 <td>kode Transaksi</td>
+                <td>Gambar</td>
                 <td>Nama Pelanggan</td>
                 <td>Menu</td>
                 <td>Total Beli</td>
@@ -134,7 +139,12 @@
             @forelse ($transactions as $index => $transaction)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $transaction->kode_transaksi}}</td>
+                    <td>{{ $transaction->kode_transaksi }}</td>
+                    <td>
+                        <div class="img"
+                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $transaction->gambar) }});">
+                        </div>
+                    </td>
                     <td>{{ $transaction->customer->name }}</td>
                     <td>{{ $transaction->menu->name }}</td>
                     <td>{{ $transaction->totalAmount }}</td>

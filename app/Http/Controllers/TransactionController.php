@@ -8,10 +8,12 @@ use App\Models\employee;
 use App\Models\transaction;
 use App\Http\Requests\StoretransactionRequest;
 use App\Http\Requests\UpdatetransactionRequest;
+use App\UploadTrait;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    use UploadTrait;
     /**
      * Display a listing of the resource.
      */
@@ -63,7 +65,8 @@ class TransactionController extends Controller
             'totalAmount' => $request->totalAmount,
             'priceTotal' => $menu->price * $request->totalAmount,
             'transactionDate' => $request->transactionDate,
-            'employee_id' => $request->employee_id
+            'employee_id' => $request->employee_id,
+            'gambar' => $this->upload('gambar', $request->gambar)
         ]);
 
         return redirect()->back()->with('add', 'Data telah berhasil ditambahkan');
