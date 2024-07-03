@@ -38,7 +38,7 @@
     <div class="d-flex justify-content-between">
         <form action="" method="get" class="d-flex w-50">
             @csrf
-            <input type="text" name="search" class="form-control" >
+            <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -111,10 +111,14 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        <div class="img"
-                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $ingredient->gambar) }});">
-                        </div>
-                    </td>
+                        @if ($ingredient->gambar)
+                            <div class="img"
+                                style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $ingredient->gambar) }});">
+                            </div>
+                        @else
+                            Tidak ada data gambar
+                        @endif
+                        </>
                     <td>{{ $ingredient->name }}</td>
                     <td>{{ $ingredient->stock }}</td>
                     <td>{{ $ingredient->supplier->name }}</td>
@@ -144,7 +148,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('edit.ingredient', [$ingredient->id]) }}" method="post">
+                                <form action="{{ route('edit.ingredient', [$ingredient->id]) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
@@ -169,10 +173,19 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        <div class="col-lg-12 mb-3">
+                                            <label for="gambar" class="form-label">Gambar</label>
+                                            <input type="file" name="gambar" id="gambar" class="form-control">
+                                            @if ($ingredient->gambar)
+                                                <img src="{{ asset('storage/' . $ingredient->gambar) }}" alt=""
+                                                    style="max-width: 200px;margin-top:10px;">
+                                            @endif
                                         </div>
-                                    </div>
+                                        <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
+                                            <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div>
+                                        </div>
                                 </form>
 
                             </div>

@@ -44,13 +44,24 @@ class IngredientController extends Controller
         if ($bahan) {
             $bahan->stock += $request->stock;
             $bahan->save();
+
+            if ($request->hasFile('gambar')) {
+                $gambar = $this->upload('gambar', $request->file('gambar'));
+                $bahan->gambar = $gambar;
+                $bahan->save();
+            }
         } else {
+            if ($request->hasFile('gambar')) {
+                $gambar = $this->upload('gambar', $request->file('gambar'));
+            } else {
+                $gambar = null;
+            }
 
             ingredient::create([
                 'name' => $request->name,
                 'stock' => $request->stock,
                 'supplier_id' => $request->supplier_id,
-                'gambar' => $this -> upload('gambar', $request->gambar)
+                'gambar' => $gambar
             ]);
         }
         return redirect()->back()->with('success', 'Data berhasil disimpan.');
@@ -103,11 +114,19 @@ class IngredientController extends Controller
             $ingredient->delete();
         } else {
             // Jika tidak ada, update ingredient yang sedang diproses
-            $ingredient->update([
-                'name' => $request->name,
-                'stock' => $request->stock,
-                'supplier_id' => $request->supplier_id,
-            ]);
+            $data = [
+                    'name' => $request->name,
+                    'stock' => $request->stock,
+                    'supplier_id' => $request->supplier_id,
+                ];
+
+            if ($request->hasFile('gambar')) {
+                $data['gambar'] = $this->upload('gambar', $request->file('gambar'));
+            } else {
+                $data['gambar'] = $ingredient->gambar;
+            }
+
+            $ingredient->update($data);
         }
 
         return redirect()->route('ingredient')->with('edit', 'Data berhasil diupdate');
