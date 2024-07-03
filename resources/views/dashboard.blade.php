@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
-    <title>Admin SMKN 2 Las Vegas</title>
+    <title>Admin Kantin</title>
     <meta name="description" content="Materialize – is the most developer friendly &amp; highly customizable Admin Dashboard Template." />
     <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <link rel="canonical" href="https://1.envato.market/materialize_admin">
@@ -25,8 +25,6 @@
     </script>
     <!-- End Google Tag Manager -->
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://demos.pixinvent.com/materialize-html-admin-template/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
