@@ -62,7 +62,7 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/transaction" method="post" enctype="multipart/form-data">
+                    <form action="/create/transaction" method="post">
                         @csrf
                         @method('POST')
                         <div class="row">
@@ -106,10 +106,6 @@
                                     @endforelse
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Gambar</label>
-                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
-                            </div>
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-secondary">Tambah</button>
                             </div>
@@ -126,8 +122,8 @@
             <tr>
                 <td>No</td>
                 <td>kode Transaksi</td>
-                <td>Gambar</td>
                 <td>Nama Pelanggan</td>
+                <td>Gambar Menu</td>
                 <td>Menu</td>
                 <td>Total Beli</td>
                 <td>Total Harga</td>
@@ -140,12 +136,16 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $transaction->kode_transaksi }}</td>
-                    <td>
-                        <div class="img"
-                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $transaction->gambar) }});">
-                        </div>
-                    </td>
                     <td>{{ $transaction->customer->name }}</td>
+                    <td>
+                        @if ($transaction->menu->gambar)
+                        <div class="img"
+                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $transaction->menu->gambar) }});">
+                        </div>
+                        @else
+
+                        @endif
+                    </td>
                     <td>{{ $transaction->menu->name }}</td>
                     <td>{{ $transaction->totalAmount }}</td>
                     <td>{{ $transaction->priceTotal }}</td>
@@ -206,11 +206,6 @@
                                             <label class="form-label">Total Beli</label>
                                             <input type="number" name="totalAmount" placeholder="Total Beli"
                                                 class="form-control" value="{{ $transaction->totalAmount }}">
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">Total Harga</label>
-                                            <input type="number" name="priceTotal" placeholder="Total Harga"
-                                                class="form-control" value="{{ $transaction->priceTotal }}">
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Tanggal Transaksi</label>

@@ -113,10 +113,12 @@
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>
-                        <div class="img"
-                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $menu->gambar) }});">
+                        @if ($menu->gambar)
+                        <div class="img" style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $menu->gambar) }});">
                         </div>
-                    </td>
+                        @else
+                        Tidak ada data gambar
+                        @endif
                     <td>{{ $menu->name }}</td>
                     <td>{{ $menu->price }}</td>
                     <td>{{ $menu->category->name }}</td>
@@ -146,7 +148,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('edit.menu', [$menu->id]) }}" method="post">
+                                <form action="{{ route('edit.menu', [$menu->id]) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
@@ -173,8 +175,10 @@
                                         </div>
                                         <div class="col-lg-12 mb-3">
                                             <label for="gambar" class="form-label">Gambar</label>
-                                            <input type="file" name="gambar" id="gambar" class="form-control"
-                                                value="{{ $menu->gambar }}">
+                                            <input type="file" name="gambar" id="gambar" class="form-control">
+                                           @if ($menu->gambar)
+                                            <img src="{{ asset('storage/'.$menu->gambar) }}" alt="" style="max-width: 200px;margin-top:10px;">
+                                           @endif
                                         </div>
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                             <button type="submit" class="btn btn-primary">Update</button>

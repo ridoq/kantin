@@ -65,8 +65,7 @@ class TransactionController extends Controller
             'totalAmount' => $request->totalAmount,
             'priceTotal' => $menu->price * $request->totalAmount,
             'transactionDate' => $request->transactionDate,
-            'employee_id' => $request->employee_id,
-            'gambar' => $this->upload('gambar', $request->gambar)
+            'employee_id' => $request->employee_id
         ]);
 
         return redirect()->back()->with('add', 'Data telah berhasil ditambahkan');
@@ -93,12 +92,14 @@ class TransactionController extends Controller
      */
     public function update(UpdatetransactionRequest $request, transaction $transaction)
     {
+        $menu = Menu::findOrFail($request->menu_id);
         $transaction->update([
             'customer_id' => $request->customer_id,
             'menu_id' => $request->menu_id,
-            'totalAmount' => $request->totalAmount,
-            'priceTotal' => $request->priceTotal,
+            'totalAmount' =>  $request->totalAmount,
+            'priceTotal' => $menu->price * $request->totalAmount,
             'transactionDate' => $request->transactionDate,
+            'employee_id' => $request->employee_id,
         ]);
         return redirect()->back()->with('edit', 'Data berhasil di update');
     }

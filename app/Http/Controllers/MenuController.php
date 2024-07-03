@@ -19,8 +19,8 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $menus = menu::where('name', 'LIKE', "%$request->search%")
-            ->orWhereRaw('CAST(price AS CHAR) LIKE?',['%'. $request->search .'%'])
-            ->orWhereRelation('category','name','LIKE',"%$request->search%")
+            ->orWhereRaw('CAST(price AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->orWhereRelation('category', 'name', 'LIKE', "%$request->search%")
             ->get();
         $categories = Category::all();
 
@@ -40,11 +40,16 @@ class MenuController extends Controller
      */
     public function store(StoremenuRequest $request)
     {
+        if ($request->hasFile('gambar')) {
+            $gambar = $this->upload('gambar', $request->gambar);
+        } else {
+            $gambar = null;
+        }
         menu::create([
             'name' => $request->name,
             'price' => $request->price,
             'category_id' => $request->category_id,
-            'gambar' => $this->upload('gambar', $request->gambar),
+            'gambar' => $gambar
         ]);
         return redirect()->back()->with('add', 'Data telah berhasil ditambahkan');
     }
@@ -71,26 +76,23 @@ class MenuController extends Controller
     public function update(UpdatemenuRequest $request, menu $menu)
     {
         try {
+
+            if ($request->hasFile('gambar')) {
+                $gambar = $this->upload('gambar', $request->gambar);
+            } else {
+                $gambar = $menu->gambar;
+            }
+
+
             $menu->update([
                 'name' => $request->name,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
-                'gambar' => $this->upload('gambar', $request->gambar)
+                'gambar' => $gambar
             ]);
             return redirect()->route('menu')->with('edit', 'Data berhasil di update');
         } catch (\Exception $e) {
         }
-
-        // try{
-        //     $menu->update([
-        //         'menu'=>$request->menu,
-        //         'price'=>$request->price,
-        //         'category_id'=>$request->category_id,
-        //     ]);
-        //     return redirect()->route('category')->with('edit','Data berhasil di update');
-        // }catch(\Exception $e){
-        //     return redirect()->route('category')->with('unique','Data telah ada sebelumnya');
-        // }
     }
 
     /**

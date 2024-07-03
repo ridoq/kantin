@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('priceTotal');
             $table->date('transactionDate');
             $table->foreignId('employee_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
-            $table->string('gambar')->nullable();
             $table->timestamps();
         });
     }
