@@ -143,7 +143,7 @@
                             style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $transaction->menu->gambar) }});">
                         </div>
                         @else
-
+                        Tidak ada data gambar
                         @endif
                     </td>
                     <td>{{ $transaction->menu->name }}</td>

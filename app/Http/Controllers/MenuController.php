@@ -76,7 +76,6 @@ class MenuController extends Controller
     public function update(UpdatemenuRequest $request, menu $menu)
     {
         try {
-
             if ($request->hasFile('gambar')) {
                 $gambar = $this->upload('gambar', $request->gambar);
             } else {
