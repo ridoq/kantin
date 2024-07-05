@@ -76,11 +76,11 @@
                             {{-- col++ --}}
                             <div class="col-6 mb-3">
                                 <label for="" class="form-label">Nama Supplier</label>
-                                <input type="text" name="name" placeholder="Supplier" class="form-control">
+                                <input type="text" value="{{old('name')}}" name="name" placeholder="Supplier" class="form-control">
                             </div>
                             <div class="col-6 mb-3">
                                 <label for="" class="form-label">Nomor Telepon</label>
-                                <input type="number" name="tel" placeholder="Nomor Telepon" class="form-control">
+                                <input type="number" value="{{old('number')}}" name="tel" placeholder="Nomor Telepon" class="form-control">
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="" class="form-label">Alamat</label>

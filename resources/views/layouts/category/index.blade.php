@@ -82,7 +82,7 @@
                             {{-- col++ --}}
                             <div class="col-12 mb-3">
                                 <label for="" class="form-label">Nama Kategori</label>
-                                <input type="text" name="name" placeholder="category" class="form-control">
+                                <input type="text" value="{{old('name')}}" name="name" placeholder="category" class="form-control">
                             </div>
                             <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-primary">Tambah</button>

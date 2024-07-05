@@ -82,19 +82,19 @@
                             {{-- col++ --}}
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">Nama Pegawai</label>
-                                <input type="text" name="name" placeholder="Nama Pegawai" class="form-control">
+                                <input type="text" value="{{ old('name') }}" name="name" placeholder="Nama Pegawai" class="form-control">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="" class="form-label">Nomor Telepon</label>
-                                <input type="number" name="tel" placeholder="Nomor Telepon" class="form-control">
+                                <input type="number" value="{{ old('tel') }}" name="tel" placeholder="Nomor Telepon" class="form-control">
                             </div>
                             <div class="col-lg-6 mb-3">
                                 <label for="" class="form-label">Email</label>
-                                <input type="email" name="email" placeholder="Email" class="form-control">
+                                <input type="email" value="{{ old('email') }}" name="email" placeholder="Email" class="form-control">
                             </div>
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">Alamat</label>
-                                <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control"></textarea>
+                                <textarea name="address" id="" cols="10" rows="5" style="resize: none" class="form-control">{{ old('address') }}</textarea>
                             </div>
                             <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
