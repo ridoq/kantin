@@ -116,7 +116,8 @@
                                 style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $ingredient->gambar) }});">
                             </div>
                         @else
-                            Tidak ada data gambar
+                            <img src="{{ asset('assets/img/image_not_avaible.png') }}" alt="image_not_avaible"
+                                style="background-size: cover;background-position:center;width: 200px;height:150px;">
                         @endif
                         </>
                     <td>{{ $ingredient->name }}</td>
@@ -148,7 +149,8 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('edit.ingredient', [$ingredient->id]) }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('edit.ingredient', [$ingredient->id]) }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
