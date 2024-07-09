@@ -32,15 +32,23 @@ class StoreemployeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Kolom nama ini harus diisi',
-            'tel.required' => 'Kolom telepon ini harus diisi',
-            'tel.min' => 'Kolom telepon tidak boleh minus',
+            'name.required' => 'Nama harus diisi',
+            'name.string' => 'Nama harus berupa string',
+            'name.max' => 'Nama maximal 255',
+            'tel.required' => 'Telepon harus diisi',
+            'tel.numeric' => 'Telepon harus berupa angka',
+            'tel.min' => 'Telepon tidak boleh minus',
             'tel.min_digits' => 'Nomor telepon minimal harus 4 digit',
             'tel.max_digits' => 'Nomor telepon maximal harus 13 digit',
-            'tel.unique' => 'Data telepon telah ada sebelumnya',
-            'email.required' => 'Kolom email ini harus diisi',
-            'email.unique' => 'Data email telah ada sebelumnya',
-            'address.required' => 'Kolom alamat ini harus diisi',
+            'tel.unique' => 'Telepon telah terdaftar',
+            'email.required' => 'Email harus diisi',
+            'email.string' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.max' => 'Email maksimal 255 karakter',
+            'email.unique' => 'Email telah terdaftar',
+            'address.required' => 'Alamat harus diisi',
+            'address.string' => 'Alamat harus berupa string',
+            'address.max' => 'Alamat maksimal 255 karakter',
         ];
     }
 }

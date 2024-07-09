@@ -23,7 +23,7 @@ class UpdatecustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
             'tel' =>
             [
                 'required',
@@ -34,23 +34,33 @@ class UpdatecustomerRequest extends FormRequest
                 Rule::unique('customers', 'tel')
                 ->ignore($this->customer->id)
             ],
-            'email' => ['required',
+            'email' => ['required', 'email', 'max:255',
                         Rule::unique('customers', 'email')
                         ->ignore($this->customer->id)
                     ],
-            'address' => ['required'],
+            'address' => ['required','string', 'max:255'],
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Kolom nama ini harus diisi',
-            'tel.required' => 'Kolom telefon ini harus diisi',
-            'tel.unique' => 'Data telefon telah ada sebelumnya',
-            'email.required' => 'Kolom email ini harus diisi',
-            'email.unique' => 'Data email telah ada sebelumnya',
-            'address.required' => 'Kolom alamat ini harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'name.string' => 'Nama harus berupa string',
+            'name.max' => 'Nama maximal 255 karakter',
+            'tel.required' => 'Telepon harus diisi',
+            'tel.numeric' => 'Telepon harus berupa angka',
+            'tel.min' => 'Telepon tidak boleh minus',
+            'tel.min_digits' => 'Telepon minimal adalah 4 digit',
+            'tel.max_digits' => 'Telepon maximal adalah 13 digit',
+            'tel.unique' => 'Telepon telah terdaftar',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.max' => 'Email maximal 255 karakter',
+            'email.unique' => 'Email telah terdaftar',
+            'address.required' => 'Alamat harus diisi',
+            'address.string' => 'Alamat harus berupa string',
+            'address.max' => 'address maximal 255 karakter',
         ];
     }
 }

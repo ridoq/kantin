@@ -24,7 +24,7 @@ class StorecustomerRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'tel' => ['required', 'numeric', 'min:0', 'min_digits:4', 'max_digits:13', 'unique:customers,tel'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers,email'],
+            'email' => ['required', 'email', 'max:255', 'unique:customers,email'],
             'address' => ['required', 'string', 'max:255'],
         ];
     }
@@ -32,12 +32,22 @@ class StorecustomerRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Kolom nama ini harus diisi',
-            'tel.required' => 'Kolom telefon ini harus diisi',
-            'tel.unique' => 'Data telefon telah ada sebelumnya',
-            'email.required' => 'Kolom email ini harus diisi',
-            'email.unique' => 'Data email telah ada sebelumnya',
-            'address.required' => 'Kolom alamat ini harus diisi',
+            'name.required' => 'Nama harus diisi',
+            'name.string' => 'Nama harus berupa string',
+            'name.max' => 'Nama maximal 255 karakter',
+            'tel.required' => 'Telepon harus diisi',
+            'tel.numeric' => 'Telepon harus berupa angka',
+            'tel.min' => 'Telepon tidak boleh minus',
+            'tel.min_digits' => 'Telepon minimal adalah 4 digit',
+            'tel.max_digits' => 'Telepon maximal adalah 13 digit',
+            'tel.unique' => 'Telepon telah terdaftar',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.max' => 'Email maximal 255 karakter',
+            'email.unique' => 'Email telah terdaftar',
+            'address.required' => 'Alamat harus diisi',
+            'address.string' => 'Alamat harus berupa string',
+            'address.max' => 'address maximal 255 karakter',
         ];
     }
 }

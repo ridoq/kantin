@@ -43,7 +43,7 @@ class CustomerController extends Controller
             'email' => $request->email,
             'address' => $request->address
         ]);
-        return redirect()->back()->with('add', 'data berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -67,17 +67,13 @@ class CustomerController extends Controller
      */
     public function update(UpdatecustomerRequest $request, customer $customer)
     {
-        try {
             $customer->update([
                 'name' => $request->name,
                 'tel' => $request->tel,
                 'email' => $request->email,
                 'address' => $request->address,
             ]);
-            return redirect()->route('customer')->with('edit', 'Data category berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->route('customer')->with('unique', 'Data telah ada sebelumnya');
-        }
+            return redirect()->route('customer')->with('edit', 'Data berhasil diperbarui.');
     }
 
     /**

@@ -41,7 +41,7 @@ class EmployeeController extends Controller
             'email' => $request->email,
             'address' => $request->address,
         ]);
-        return redirect()->back()->with('add', 'data berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data berhasil ditambahkan');
     }
 
     /**
