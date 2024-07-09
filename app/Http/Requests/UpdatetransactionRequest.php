@@ -22,18 +22,20 @@ class UpdatetransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-
-            'totalAmount' => 'required|numeric',
+            'customer_id' => 'required|exists:customers,id',
             'transactionDate' => 'required',
+            'employee_id' => 'required|exists:employees,id',
         ];
     }
 
     public function messages()
     {
         return [
-            'totalAmount.required' => 'Kolom jumlah beli ini harus diisi',
-            'totalAmount.numeric' => 'Kolom jumlah beli harus berupa angka',
-            'transactionDate.required' => 'Kolom tanggal transaksi harus diisi',
+            'customer_id.required' => 'Kolom pelanggan ini harus diisi',
+            'customer_id.exists' => 'Customer yang anda pilih tidak valid',
+            'transactionDate.required' => 'Kolom tanggal transaksi ini harus diisi',
+            'employee_id.required' => 'Kolom pegawai ini harus diisi',
+            'employee_id.exists' => 'Employee yang anda pilih tidak valid',
         ];
     }
 }

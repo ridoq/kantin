@@ -57,17 +57,17 @@
             </li>
             <li class="menu-item">
               <a href="/transaction" class="menu-link">
-                <div>Transaksi</div>
+                <div>Transaksi Pelanggan</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="/ingredient" class="menu-link">
-                <div>Bahan-bahan</div>
+              <a href="/stock" class="menu-link">
+                <div>Stok Menu</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="/supplier" class="menu-link">
-                <div>Pemasok</div>
+              <a href="/detail" class="menu-link">
+                <div>Detail Transaksi</div>
               </a>
             </li>
           </ul>

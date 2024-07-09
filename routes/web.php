@@ -6,9 +6,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DetailTransactionController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\StockMenuController;
 use App\Http\Controllers\TransactionController;
 
 Auth::routes();
@@ -37,20 +39,20 @@ Route::middleware('auth')->group(function () {
     Route::put('edit/employee/{employee}', [EmployeeController::class, 'update'])->name('edit.employee');
     Route::delete('delete/employee/{employee}', [EmployeeController::class, 'destroy'])->name('delete.employee');
 
-    Route::get('supplier', [SupplierController::class, 'index'])->name('supplier');
-    Route::post('create/supplier', [SupplierController::class, 'store']);
-    Route::put('edit/supplier/{supplier}', [SupplierController::class, 'update'])->name('edit.supplier');
-    Route::delete('delete/supplier/{supplier}', [SupplierController::class, 'destroy'])->name('delete.supplier');
+    Route::get('detail', [DetailTransactionController::class, 'index'])->name('detail');
+    Route::post('create/detail', [DetailTransactionController::class, 'store']);
+    Route::put('edit/detail/{detail_transaction}', [DetailTransactionController::class, 'update'])->name('edit.detail');
+    Route::delete('delete/detail/{detail_transaction}', [DetailTransactionController::class, 'destroy'])->name('delete.detail');
 
     Route::get('transaction', [TransactionController::class, 'index'])->name('transaction');
     Route::post('create/transaction', [TransactionController::class, 'store']);
     Route::put('edit/transaction/{transaction}', [TransactionController::class, 'update'])->name('edit.transaction');
     Route::delete('delete/transaction/{transaction}', [TransactionController::class, 'destroy'])->name('delete.transaction');
 
-    Route::get('ingredient', [IngredientController::class, 'index'])->name('ingredient');
-    Route::post('create/ingredient', [IngredientController::class, 'store']);
-    Route::put('edit/ingredient/{ingredient}', [IngredientController::class, 'update'])->name('edit.ingredient');
-    Route::delete('delete/ingredient/{ingredient}', [IngredientController::class, 'destroy'])->name('delete.ingredient');
+    Route::get('stock', [StockMenuController::class, 'index'])->name('stock');
+    Route::post('create/stock', [StockMenuController::class, 'store']);
+    Route::put('edit/stock/{stockMenu}', [StockMenuController::class, 'update'])->name('edit.stock');
+    Route::delete('delete/stock/{stockMenu}', [StockMenuController::class, 'destroy'])->name('delete.stock');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 

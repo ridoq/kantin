@@ -24,7 +24,7 @@ class StoreemployeeRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'tel' => ['required', 'numeric', 'min:0', 'min_digits:4', 'max_digits:13', 'unique:customers,tel'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers,email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:employees,email'],
             'address' => ['required', 'string', 'max:255'],
         ];
     }

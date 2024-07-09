@@ -38,7 +38,7 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <h3>Tabel Transaksi</h3>
+    <h3>Tabel Transaksi Pelanggan</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between mb-5">
@@ -76,21 +76,6 @@
                                     @endforelse
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Menu</label>
-                                <select name="menu_id" class="form-select" required>
-                                    @forelse ($menus as $menu)
-                                        <option value="{{ $menu->id }}"> {{ $menu->name }}</option>
-                                    @empty
-                                        <option hidden>Tidak ada data</option>
-                                    @endforelse
-                                </select>
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">Jumlah Beli</label>
-                                <input type="number" name="totalAmount" placeholder="Jumlah Beli" class="form-control"
-                                    required value="{{ old('totalAmount') }}">
-                            </div>
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">Tanggal Transaksi</label>
                                 <input type="date" name="transactionDate" placeholder="Tanggal Transaksi"
@@ -123,11 +108,8 @@
                 <td>No</td>
                 <td>kode Transaksi</td>
                 <td>Nama Pelanggan</td>
-                <td>Gambar Menu</td>
-                <td>Menu</td>
-                <td>Total Beli</td>
-                <td>Total Harga</td>
                 <td>Tanggal Transaksi</td>
+                <td>Nama Pegawai</td>
                 <td>Aksi</td>
             </tr>
         </thead>
@@ -137,19 +119,8 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $transaction->kode_transaksi }}</td>
                     <td>{{ $transaction->customer->name }}</td>
-                    <td>
-                        @if ($transaction->menu->gambar)
-                        <div class="img"
-                            style="background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $transaction->menu->gambar) }});">
-                        </div>
-                        @else
-                        Tidak ada data gambar
-                        @endif
-                    </td>
-                    <td>{{ $transaction->menu->name }}</td>
-                    <td>{{ $transaction->totalAmount }}</td>
-                    <td>{{ $transaction->priceTotal }}</td>
-                    <td>{{ $transaction->transactionDate }}</td>
+                <td>{{ $transaction->transactionDate }}</td>
+                <td>{{ $transaction->employee->name }}</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">
@@ -190,22 +161,6 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                        </div>
-                                        <div class="col-lg-12 mb-3">
-                                            <label class="form-label">Menu</label>
-                                            <select name="menu_id" class="form-select">
-                                                @foreach ($menus as $menu)
-                                                    <option value="{{ $menu->id }}"
-                                                        {{ $transaction->menu_id == $menu->id ? 'selected' : '' }}>
-                                                        {{ $menu->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">Total Beli</label>
-                                            <input type="number" name="totalAmount" placeholder="Total Beli"
-                                                class="form-control" value="{{ $transaction->totalAmount }}">
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Tanggal Transaksi</label>

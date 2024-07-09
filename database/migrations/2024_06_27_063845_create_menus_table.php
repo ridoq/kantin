@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->integer('price');
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete()->restrictOnUpdate();
+            $table->foreignId('category_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->string('gambar')->nullable();
             $table->timestamps();
         });

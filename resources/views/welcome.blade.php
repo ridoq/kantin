@@ -4,10 +4,10 @@
         <div class="col-md-6">
             <div class="card mb-3" >
                 <div class="card-body d-flex justify-content-between align-items-start">
-                    <img src="{{ asset('assets/img/profile.svg') }}" class="img-fluid rounded-start" alt="...">
+                    <img src="{{ asset('assets/img/43322.jpg') }}" class="img-fluid rounded-start" style="width: 40%">
                     <div class="text ms-3 mt-2">
                         <h3 class="card-title">
-                            Welcome, Chef
+                            Welcome, Chief
                             @auth
                                 <b class="text-primary">{{ Auth::user()->name }}</b>
                             @endauth

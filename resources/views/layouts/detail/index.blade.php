@@ -41,7 +41,7 @@
 6. cek button delete nya,[form action:routenya]
 --}}
     {{-- judul --}}
-    <h3>Tabel Pemasok</h3>
+    <h3>Tabel Detail Transaksi</h3>
     {{-- end judul --}}
 
     {{-- CREATE DATA - modal --}}
@@ -53,14 +53,14 @@
             <input type="text" name="search" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
         </form>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSupplier">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDetail">
             Tambah Data
         </button>
     </div>
     {{-- end button create trigger modals --}}
 
     <!-- Modal CREATE DATA-->
-    <div class="modal fade" id="createSupplier" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -69,22 +69,36 @@
                 </div>
                 {{-- ubahable --}}
                 <div class="modal-body">
-                    <form action="/create/supplier" method="post">
+                    <form action="/create/detail" method="post">
                         @csrf
                         @method('POST')
                         <div class="row">
                             {{-- col++ --}}
-                            <div class="col-6 mb-3">
-                                <label for="" class="form-label">Nama Supplier</label>
-                                <input type="text" value="{{old('name')}}" name="name" placeholder="Supplier" class="form-control">
+                            <div class="col-lg-12 mb-3">
+                                <label class="form-label">Transaksi</label>
+                                <select name="transaction_id" class="form-select">
+                                    @forelse ($transactions as $transaction)
+                                        <option value="{{ $transaction->id }}">{{ $transaction->kode_transaksi }} -
+                                            {{ $transaction->customer->name . ' (customer)' }}</option>
+                                    @empty
+                                        <option hidden>Tidak ada Data</option>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="col-lg-12 mb-3">
+                                <label class="form-label">Menu</label>
+                                <select name="stock_menu_id" class="form-select">
+                                    @forelse ($stockMenus as $stockMenu)
+                                        <option value="{{ $stockMenu->id }}">{{ $stockMenu->menu->name }}</option>
+                                    @empty
+                                        <option hidden>Tidak ada Data</option>
+                                    @endforelse
+                                </select>
                             </div>
                             <div class="col-6 mb-3">
-                                <label for="" class="form-label">Nomor Telepon</label>
-                                <input type="number" value="{{old('number')}}" name="tel" placeholder="Nomor Telepon" class="form-control">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="" class="form-label">Alamat</label>
-                                <input type="text" name="address" placeholder="Alamat" class="form-control">
+                                <label for="" class="form-label">Jumlah Beli</label>
+                                <input type="number" value="{{ old('totalAmount') }}" name="totalAmount"
+                                    placeholder="Jumlah Beli" class="form-control">
                             </div>
                             <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
@@ -104,32 +118,50 @@
         <thead>
             <tr>
                 <td>No</td>
-                <td>Nama Supplier</td>
-                <td>Nomor Telepon</td>
-                <td>Alamat</td>
+                <td>Kode Detail Transaksi</td>
+                <td>Transaksi</td>
+                <td>Tanggal Transaksi</td>
+                <td>Nama Menu</td>
+                <td>Gambar Menu</td>
+                <td>Total Beli</td>
+                <td>Total Harga</td>
                 <td>Aksi</td>
             </tr>
         </thead>
         {{-- ubahable --}}
         <tbody>
-            @forelse ($suppliers as $index => $supplier)
+            @forelse ($detail_transactions as $index => $detail_transaction)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $supplier->name }}</td>
-                    <td>{{ $supplier->tel }}</td>
-                    <td>{{ $supplier->address }}</td>
+                    <td>{{ $detail_transaction->kode_detail }}</td>
+                    <td>{{ $detail_transaction->transactions->kode_transaksi }} -
+                        {{ $detail_transaction->transactions->customer->name }}</td>
+                    <td>{{ $detail_transaction->transactions->transactionDate }}</td>
+                    <td>{{ $detail_transaction->stockMenu->menu->name }}</td>
+                    <td>
+                        @if ($detail_transaction->stockMenu->menu->gambar)
+                            <div class="img"
+                                style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $detail_transaction->stockMenu->menu->gambar) }});">
+                            </div>
+                        @else
+                            <img src="{{ asset('assets/img/image_not_avaible.png') }}" alt="image_not_avaible"
+                                style="background-size: cover;background-position:center;width: 200px;height:150px;">
+                        @endif
+                    </td>
+                    <td>{{ $detail_transaction->totalAmount }}</td>
+                    <td>{{ $detail_transaction->totalPrice }}</td>
                     <td>
                         <div class="d-flex gap-2">
                             <div class="d-flex justify-content-end">
                                 {{-- button trigger modal edit --}}
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $supplier->id }}">
+                                    data-bs-target="#exampleModal-{{ $detail_transaction->id }}">
                                     Edit
                                 </button>
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/supplier/{{ $supplier->id }}" method="post">
+                            <form action="delete/detail/{{ $detail_transaction->id }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -138,7 +170,7 @@
                         </div>
                     </td>
                     {{-- modal edit --}}
-                    <div class="modal fade" id="exampleModal-{{ $supplier->id }}" tabindex="-1"
+                    <div class="modal fade" id="exampleModal-{{ $detail_transaction->id }}" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -149,24 +181,36 @@
                                 </div>
                                 {{-- ubahable --}}
                                 <div class="modal-body">
-                                    <form action="{{ route('edit.supplier', [$supplier->id]) }}" method="post">
+                                    <form action="{{ route('edit.detail', [$detail_transaction->id]) }}"
+                                        method="post">
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class=" col-lg-6 mb-3">
-                                                <label class="form-label">Nama Supplier</label>
-                                                <input type="text" name="name" placeholder="supplier"
-                                                    class="form-control" value="{{ $supplier->name }}">
+                                            <div class="col-lg-12 mb-3">
+                                                <label class="form-label">Transaksi</label>
+                                                <select name="transaction_id" class="form-select">
+                                                    @forelse ($transactions as $transaction)
+                                                        <option value="{{ $transaction->id }}" {{ $detail_transaction->transaction_id == $transaction->id ? 'selected' : '' }}>{{ $transaction->kode_transaksi }} -
+                                                            {{ $transaction->customer->name . ' (customer)' }}</option>
+                                                    @empty
+                                                        <option hidden>Tidak ada Data</option>
+                                                    @endforelse
+                                                </select>
                                             </div>
-                                            <div class=" col-lg-6 mb-3">
-                                                <label class="form-label">Telepon</label>
-                                                <input type="number" name="tel" placeholder="telepon"
-                                                    class="form-control" value="{{ $supplier->tel }}">
+                                            <div class="col-lg-12 mb-3">
+                                                <label class="form-label">Menu</label>
+                                                <select name="stock_menu_id" class="form-select">
+                                                    @forelse ($stockMenus as $stockMenu)
+                                                        <option value="{{ $stockMenu->id }}" {{ $detail_transaction->stock_menu_id == $stockMenu->id ? 'selected' : '' }}>{{ $stockMenu->menu->name }}</option>
+                                                    @empty
+                                                        <option hidden>Tidak ada Data</option>
+                                                    @endforelse
+                                                </select>
                                             </div>
-                                            <div class=" col-lg-12 mb-3">
-                                                <label class="form-label">Alamat</label>
-                                                <input type="text" name="address" placeholder="Alamat"
-                                                    class="form-control" value="{{ $supplier->address }}">
+                                            <div class="col-6 mb-3">
+                                                <label for="" class="form-label">Jumlah Beli</label>
+                                                <input type="number" value="{{ $detail_transaction->totalAmount }}" name="totalAmount"
+                                                    placeholder="Jumlah Beli" class="form-control">
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">
                                                 <button type="submit" class="btn btn-primary w-25">Update</button>

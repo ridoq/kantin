@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateingredientRequest extends FormRequest
+class StorestockMenuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,19 @@ class UpdateingredientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>['required'],
-            'stock'=>['required','integer','min:0'],
-            'supplier_id'=>['required'],
+            'menu_id' => ['required','exists:menus,id'],
+            'stock' => ['required','integer','min:0'],
         ];
     }
+
     public function messages()
     {
         return[
-            'name.required'=>'Kolom nama harus diisi',
-            'stock.required'=>'Kolom stok harus diisi',
-            'stock.integer'=>'Kolom stok harus berupa bilangan bulat',
-            'stock.min'=>'stok tidak boleh minus',
-            'supplier_id.required'=>'Kolom nama supplier tidak boleh kosong',
+            'menu_id.required'=>'Kolom menu harus diisi',
+            'menu_id.exists'=>'Kolom menu tidak valid',
+            'stock.required'=>'Kolom stock harus diisi',
+            'stock.integer'=>'Kolom stock harus berupa angka',
+            'stock.min'=>'Stock minimal adalah 1',
         ];
     }
 }

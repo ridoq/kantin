@@ -32,7 +32,7 @@
             </div>
         @endforeach
     @endif
-    <h3>Tabel Bahan-bahan</h3>
+    <h3>Tabel Stok Menu</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between">
@@ -56,33 +56,24 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/ingredient" method="post" enctype="multipart/form-data">
+                    <form action="/create/stock" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="row">
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">Nama</label>
-                                <input type="text" name="name" placeholder="Nama" class="form-control"
-                                    value="{{ old('name') }}">
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">Stock</label>
-                                <input type="number" name="stock" placeholder="Stock" class="form-control"
-                                    value="{{ old('stock') }}">
-                            </div>
                             <div class="col-lg-12 mb-3">
-                                <label class="form-label">Supplier</label>
-                                <select name="supplier_id" class="form-select">
-                                    @forelse ($suppliers as $supplier)
-                                        <option value="{{ $supplier->id }}"> {{ $supplier->name }}</option>
+                                <label class="form-label">Menu</label>
+                                <select name="menu_id" class="form-select">
+                                    @forelse ($menus as $menu)
+                                        <option value="{{ $menu->id }}"> {{ $menu->name }}</option>
                                     @empty
                                         <option hidden>Tidak ada Data</option>
                                     @endforelse
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Gambar</label>
-                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
+                            <div class="col-lg-6 mb-3">
+                                <label class="form-label">Stok</label>
+                                <input type="number" name="stock" placeholder="stok" class="form-control"
+                                    value="{{ old('stock') }}">
                             </div>
                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-secondary">Tambah</button>
@@ -99,39 +90,39 @@
         <thead>
             <tr>
                 <td>No</td>
-                <td>Gambar</td>
-                <td>Nama</td>
-                <td>Stock</td>
-                <td>Supplier</td>
+                <td>Menu</td>
+                <td>Menu Gambar</td>
+                <td>Stok Awal</td>
+                <td>Stok terjual</td>
+                <td>Stok Saat Ini</td>
                 <td>Aksi</td>
             </tr>
         </thead>
         <tbody>
-            @forelse ($ingredients as $index => $ingredient)
+            @forelse ($stockMenus as $index => $stockMenu)
                 <tr>
                     <td>{{ $index + 1 }}</td>
+                    <td>{{ $stockMenu->menu->name }}</td>
                     <td>
-                        @if ($ingredient->gambar)
+                        @if ($stockMenu->menu->gambar)
                             <div class="img"
-                                style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $ingredient->gambar) }});">
+                                style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $stockMenu->menu->gambar) }});">
                             </div>
                         @else
                             <img src="{{ asset('assets/img/image_not_avaible.png') }}" alt="image_not_avaible"
                                 style="background-size: cover;background-position:center;width: 200px;height:150px;">
                         @endif
-                        </>
-                    <td>{{ $ingredient->name }}</td>
-                    <td>{{ $ingredient->stock }}</td>
-                    <td>{{ $ingredient->supplier->name }}</td>
+                    </td>
+                    <td>{{ $stockMenu->stock }}</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $ingredient->id }}">
+                                    data-bs-target="#exampleModal-{{ $stockMenu->id }}">
                                     Edit
                                 </button>
                             </div>
-                            <form action="delete/ingredient/{{ $ingredient->id }}" method="post" class="p-0 m-0">
+                            <form action="delete/stock/{{ $stockMenu->id }}" method="post" class="p-0 m-0">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -139,7 +130,7 @@
                         </div>
                     </td>
                 </tr>
-                <div class="modal fade" id="exampleModal-{{ $ingredient->id }}" tabindex="-1"
+                <div class="modal fade" id="exampleModal-{{ $stockMenu->id }}" tabindex="-1"
                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -149,39 +140,26 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('edit.ingredient', [$ingredient->id]) }}" method="post"
+                                <form action="{{ route('edit.stock', [$stockMenu->id]) }}" method="post"
                                     enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">Nama</label>
-                                            <input type="text" name="name" placeholder="Nama" class="form-control"
-                                                value="{{ $ingredient->name }}">
-                                        </div>
-                                        <div class="col-lg-6 mb-3">
-                                            <label class="form-label">Stock</label>
-                                            <input type="number" name="stock" placeholder="harga"
-                                                class="form-control" value="{{ $ingredient->stock }}">
-                                        </div>
                                         <div class="col-lg-12 mb-3">
-                                            <label class="form-label">Nama Supllier</label>
-                                            <select name="supplier_id" class="form-select">
-                                                @foreach ($suppliers as $supplier)
-                                                    <option value="{{ $supplier->id }}"
-                                                        {{ $ingredient->supplier_id == $supplier->id ? 'selected' : '' }}>
-                                                        {{ $supplier->name }}
+                                            <label class="form-label">Nama Menu</label>
+                                            <select name="menu_id" class="form-select">
+                                                @foreach ($menus as $menu)
+                                                    <option value="{{ $menu->id }}"
+                                                        {{ $stockMenu->menu_id == $menu->id ? 'selected' : '' }}>
+                                                        {{ $menu->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-lg-12 mb-3">
-                                            <label for="gambar" class="form-label">Gambar</label>
-                                            <input type="file" name="gambar" id="gambar" class="form-control">
-                                            @if ($ingredient->gambar)
-                                                <img src="{{ asset('storage/' . $ingredient->gambar) }}" alt=""
-                                                    style="max-width: 200px;margin-top:10px;">
-                                            @endif
+                                        <div class="col-lg-6 mb-3">
+                                            <label class="form-label">Stok</label>
+                                            <input type="number" name="stock" placeholder="stok" class="form-control"
+                                                value="{{ $stockMenu->stock }}">
                                         </div>
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                             <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
