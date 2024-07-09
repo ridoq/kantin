@@ -15,7 +15,7 @@ class StockMenuController extends Controller
      */
     public function index(Request $request)
     {
-        $stockMenus = stockMenu::whereRaw('CAST(stock AS CHAR) LIKE?', ['%' . $request->search . '%'])
+        $stockMenus = stockMenu::whereRaw('CAST(stockNow AS CHAR) LIKE?', ['%' . $request->search . '%'])
             ->orWhereRelation('menu', 'name', 'LIKE', "%$request->search%")
             ->get();
         $menus = menu::all();
@@ -38,11 +38,13 @@ class StockMenuController extends Controller
         $stockMenu = stockMenu::where('menu_id', "$request->menu_id")->first();
         if ($stockMenu) {
             $stockMenu->stock += $request->stock;
+            $stockMenu->stockNow += $request->stock;
             $stockMenu->save();
         } else {
             stockMenu::create([
                 'menu_id' => $request->menu_id,
-                'stock' => $request->stock
+                'stock' => $request->stock,
+                'stockNow' => $request->stock
             ]);
         }
         return redirect()->back()->with('add', 'Data berhasil ditambahkan');

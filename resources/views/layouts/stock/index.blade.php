@@ -93,7 +93,6 @@
                 <td>Menu</td>
                 <td>Menu Gambar</td>
                 <td>Stok Awal</td>
-                <td>Stok terjual</td>
                 <td>Stok Saat Ini</td>
                 <td>Aksi</td>
             </tr>
@@ -114,6 +113,7 @@
                         @endif
                     </td>
                     <td>{{ $stockMenu->stock }}</td>
+                    <td><p class=" bg-primary d-flex justify-content-center align-items-center" style="border-radius:8px;color:white;height: 50px;width:50px;">{{ $stockMenu->stockNow }}</p></td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">

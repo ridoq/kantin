@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('menu_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->integer('stock');
+            $table->integer('stockNow');
             $table->timestamps();
         });
     }

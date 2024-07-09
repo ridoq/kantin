@@ -19,12 +19,13 @@ class DetailTransactionController extends Controller
     {
 
 
-        $detail_transactions = detail_transaction::whereRaw('CAST(totalAmount AS CHAR) LIKE?',['%'.$request->search.'%'])
-        ->orWhereRelation('transactions','kode_transaksi','LIKE',"%$request->search")
-        ->get();
+        $detail_transactions = detail_transaction::whereRaw('CAST(totalAmount AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->orWhereRelation('transactions', 'kode_transaksi', 'LIKE', "%$request->search")
+            ->orWhereRaw('kode_detail LIKE?', ['%' . $request->search . '%'])
+            ->get();
         $transactions = transaction::all();
         $stockMenus = stockMenu::all();
-        return view('layouts.detail.index',compact('detail_transactions','transactions','stockMenus'));
+        return view('layouts.detail.index', compact('detail_transactions', 'transactions', 'stockMenus'));
     }
 
     /**
@@ -40,6 +41,7 @@ class DetailTransactionController extends Controller
      */
     public function store(Storedetail_transactionRequest $request)
     {
+        //kode_detail_transaksi generator
         $kode = "001";
         $kode_detail = "DT" . $kode;
         $detail_transaction = detail_transaction::query()->latest()->first();
@@ -49,9 +51,14 @@ class DetailTransactionController extends Controller
             $old_nomor = intval($nomor) + 1;
             $kode_detail = "TR" . sprintf("%03d", $old_nomor);
         }
+        // /kode_detail
+
         $stockMenu = stockMenu::findOrFail($request->stock_menu_id);
+        if ($stockMenu->stockNow < $request->totalAmount) {
+            return redirect()->back()->with('hapus', 'Stok tidak mencukupi.');
+        }
         $menu = menu::findOrFail($stockMenu->menu_id);
-        $priceTotal = number_format($menu->price * $request->totalAmount,2,',','.');
+        $priceTotal = number_format($menu->price * $request->totalAmount, 2, ',', '.');
         detail_transaction::create([
             'kode_detail' => $kode_detail,
             'transaction_id' => $request->transaction_id,
@@ -59,7 +66,12 @@ class DetailTransactionController extends Controller
             'totalAmount' => $request->totalAmount,
             'totalPrice' => $priceTotal
         ]);
-        return redirect()->back()->with('add','Data berhasil disimpan');
+
+        // Update the stockNow column in the stockMenu table
+        $stockMenu->stockNow -= $request->totalAmount;
+        $stockMenu->save();
+
+        return redirect()->back()->with('add', 'Data berhasil disimpan');
     }
 
     /**
@@ -84,15 +96,22 @@ class DetailTransactionController extends Controller
     public function update(Updatedetail_transactionRequest $request, detail_transaction $detail_transaction)
     {
         $stockMenu = stockMenu::findOrFail($request->stock_menu_id);
+        if ($stockMenu->stockNow < $request->totalAmount) {
+            return redirect()->back()->with('hapus', 'Stok tidak mencukupi.');
+        }
+        $originalTotalAmount = $detail_transaction->totalAmount;
         $menu = menu::findOrFail($stockMenu->menu_id);
-        $priceTotal = number_format($menu->price * $request->totalAmount,2,',','.');
+        $priceTotal = number_format($menu->price * $request->totalAmount, 2, ',', '.');
         $detail_transaction->update([
             'transaction_id' => $request->transaction_id,
             'stock_menu_id' => $request->stock_menu_id,
             'totalAmount' => $request->totalAmount,
             'totalPrice' => $priceTotal
         ]);
-        return redirect()->route('detail')->with('add','Data berhasil diupdate');
+        $stockMenu->stockNow += $originalTotalAmount;
+        $stockMenu->stockNow -= $request->totalAmount;
+        $stockMenu->save();
+        return redirect()->route('detail')->with('add', 'Data berhasil diupdate');
     }
 
     /**
@@ -101,6 +120,6 @@ class DetailTransactionController extends Controller
     public function destroy(detail_transaction $detail_transaction)
     {
         $detail_transaction->delete();
-        return redirect()->back()->with('hapus','Data berhasil Dihapus');
+        return redirect()->back()->with('hapus', 'Data berhasil Dihapus');
     }
 }

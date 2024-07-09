@@ -149,7 +149,7 @@
                         @endif
                     </td>
                     <td>{{ $detail_transaction->totalAmount }}</td>
-                    <td>{{ $detail_transaction->totalPrice }}</td>
+                    <td>Rp. {{ $detail_transaction->totalPrice }}</td>
                     <td>
                         <div class="d-flex gap-2">
                             <div class="d-flex justify-content-end">
