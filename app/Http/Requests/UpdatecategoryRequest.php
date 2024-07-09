@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatecategoryRequest extends FormRequest
 {
@@ -22,13 +24,14 @@ class UpdatecategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required']
+            'name' => ['required',Rule::unique('categories', 'name')->ignore($this->category->id)]
         ];
     }
     public function messages()
     {
         return [
-            'name.required' => 'Kolom ini harus diisi'
+            'name.required' => 'Nama kategori harus diisi',
+            'name.unique' => 'Nama Kategori sudah Terdaftar '
         ];
     }
 }

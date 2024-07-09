@@ -28,16 +28,23 @@ class UpdatemenuRequest extends FormRequest
                 Rule::unique('menus','name')->ignore($this->menu->id)
             ],
             'price' => ['required', 'numeric', 'min:1'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'gambar' => ['image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ];
     }
     public function messages()
     {
         return [
-            'name.required' => 'Kolom name harus diisi',
-            'name.unique' => 'Data name telah ada sebelumnya',
-            'price.required' => 'Kolom harga harus diisi',
-            'price.numeric' => 'Kolom harga harus berupa angka',
-            'price.min' => 'Minimal harga menu adalah 1',
+            'name.required' => 'Menu harus diisi',
+            'name.unique' => 'Menu telah terdaftar',
+            'price.required' => 'Harga harus diisi',
+            'price.numeric' => 'Harga harus berupa angka',
+            'price.min' => 'Harga minimal adalah 1 rupiah',
+            'category_id.required' => 'Kategori harus diisi',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid',
+            'gambar.image' => 'Gambar menu harus berupa gambar',
+            'gambar.mimes' => 'Gambar menu harus berformat png,jpg,jpeg',
+            'gambar.max' => 'Gambar menu maksimal 2 MB',
         ];
     }
 }

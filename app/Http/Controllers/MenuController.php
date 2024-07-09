@@ -51,7 +51,7 @@ class MenuController extends Controller
             'category_id' => $request->category_id,
             'gambar' => $gambar
         ]);
-        return redirect()->back()->with('add', 'Data telah berhasil ditambahkan');
+        return redirect()->back()->with('add', 'Data berhasil ditambahkan');
     }
 
     /**
@@ -75,7 +75,6 @@ class MenuController extends Controller
      */
     public function update(UpdatemenuRequest $request, menu $menu)
     {
-        try {
             if ($request->hasFile('gambar')) {
                 $gambar = $this->upload('gambar', $request->gambar);
             } else {
@@ -89,9 +88,7 @@ class MenuController extends Controller
                 'category_id' => $request->category_id,
                 'gambar' => $gambar
             ]);
-            return redirect()->route('menu')->with('edit', 'Data berhasil di update');
-        } catch (\Exception $e) {
-        }
+            return redirect()->route('menu')->with('edit', 'Data berhasil diperbarui');
     }
 
     /**

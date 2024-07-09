@@ -28,8 +28,8 @@ class StorecategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Kolom nama kategori harus diisi',
-            'name.unique' => 'Data telah ada sebelumnya'
+            'name.required' => 'Nama kategori harus diisi',
+            'name.unique' => 'Nama Kategori sudah Terdaftar ',
         ];
     }
 }

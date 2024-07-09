@@ -34,7 +34,7 @@ class CategoryController extends Controller
         category::create([
             'name' => $request->name
         ]);
-        return redirect()->back()->with('add','data berhasil ditambahkan');
+        return redirect()->back()->with('add','Data berhasil ditambahkan');
     }
 
     /**
@@ -58,14 +58,10 @@ class CategoryController extends Controller
      */
     public function update(UpdatecategoryRequest $request, category $category)
     {
-        try {
             $category->update([
                 'name' => $request->name,
             ]);
-            return redirect()->route('category')->with('edit', 'Data category berhasil diperbarui.');
-        } catch (\Throwable $th) {
-            return redirect()->route('category')->with('unique', 'Data telah ada sebelumnya');
-        }
+            return redirect()->route('category')->with('edit', 'Data berhasil diperbarui.');
     }
 
     /**
