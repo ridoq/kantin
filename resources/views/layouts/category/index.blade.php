@@ -178,7 +178,7 @@
                                 </div>
                                 {{-- ubahable --}}
                                 <div class="modal-body">
-                                    <p>Menghapus kategori ini akan menghapus semua data yang terkait pada tabel <span class="text-danger">MENU</span>.</p>
+                                    <p>Apakah anda yakin ingin menghapus data ini?</p>
                                 </div>
                                 <div class="modal-footer">
                                     <form action="delete/category/{{ $category->id }}" method="post" >
