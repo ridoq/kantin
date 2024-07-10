@@ -69,36 +69,15 @@
                 </div>
                 {{-- ubahable --}}
                 <div class="modal-body">
-                    <form action="/create/detail" method="post">
+                    <form action="/create/paymentMethod" method="post">
                         @csrf
                         @method('POST')
                         <div class="row">
                             {{-- col++ --}}
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Transaksi</label>
-                                <select name="transaction_id" class="form-select">
-                                    @forelse ($transactions as $transaction)
-                                        <option value="{{ $transaction->id }}">{{ $transaction->kode_transaksi }} -
-                                            {{ $transaction->customer->name . ' (customer)' }}</option>
-                                    @empty
-                                        <option hidden>Tidak ada Data</option>
-                                    @endforelse
-                                </select>
-                            </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Menu</label>
-                                <select name="stock_menu_id" class="form-select">
-                                    @forelse ($stockMenus as $stockMenu)
-                                        <option value="{{ $stockMenu->id }}">{{ $stockMenu->menu->name }}</option>
-                                    @empty
-                                        <option hidden>Tidak ada Data</option>
-                                    @endforelse
-                                </select>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <label for="" class="form-label">Jumlah Beli</label>
-                                <input type="number" value="{{ old('totalAmount') }}" name="totalAmount"
-                                    placeholder="Jumlah Beli" class="form-control">
+                            <div class="col-12 mb-3">
+                                <label for="" class="form-label">Metode Pembayaran</label>
+                                <input type="text" value="{{ old('method') }}" name="method"
+                                    placeholder="Tambahkan Metode pembayaran" class="form-control">
                             </div>
                             <div class="col-12 mb-3 d-flex justify-content-end align-items-center">
                                 <button type="submit" class="btn btn-primary">Tambah</button>
@@ -118,50 +97,28 @@
         <thead>
             <tr>
                 <td>No</td>
-                <td>Kode Detail Transaksi</td>
-                <td>Transaksi</td>
-                <td>Tanggal Transaksi</td>
-                <td>Nama Menu</td>
-                <td>Gambar Menu</td>
-                <td>Total Beli</td>
-                <td>Total Harga</td>
+                <td>Metode Pembayaran</td>
                 <td>Aksi</td>
             </tr>
         </thead>
         {{-- ubahable --}}
         <tbody>
-            @forelse ($detail_transactions as $index => $detail_transaction)
+            @forelse ($paymentMethods as $index => $paymentMethod)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $detail_transaction->kode_detail }}</td>
-                    <td>{{ $detail_transaction->transactions->kode_transaksi }} -
-                        {{ $detail_transaction->transactions->customer->name }}</td>
-                    <td>{{ $detail_transaction->transactions->transactionDate }}</td>
-                    <td>{{ $detail_transaction->stockMenu->menu->name }}</td>
-                    <td>
-                        @if ($detail_transaction->stockMenu->menu->gambar)
-                            <div class="img"
-                                style="box-shadow:0px 0px 10px rgba(0,0,0,.2);background-size: cover;background-position:center;width: 200px;height:150px;background-image:url({{ asset('storage/' . $detail_transaction->stockMenu->menu->gambar) }});">
-                            </div>
-                        @else
-                            <img src="{{ asset('assets/img/image_not_avaible.png') }}" alt="image_not_avaible"
-                                style="background-size: cover;background-position:center;width: 200px;height:150px;">
-                        @endif
-                    </td>
-                    <td>{{ $detail_transaction->totalAmount }}</td>
-                    <td>Rp. {{ $detail_transaction->totalPrice }}</td>
+                    <td>{{ $paymentMethod->method }}</td>
                     <td>
                         <div class="d-flex gap-2">
                             <div class="d-flex justify-content-end">
                                 {{-- button trigger modal edit --}}
                                 <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal-{{ $detail_transaction->id }}">
+                                    data-bs-target="#exampleModal-{{ $paymentMethod->id }}">
                                     Edit
                                 </button>
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/detail/{{ $detail_transaction->id }}" method="post">
+                            <form action="delete/paymentMethod/{{ $paymentMethod->id }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
@@ -170,7 +127,7 @@
                         </div>
                     </td>
                     {{-- modal edit --}}
-                    <div class="modal fade" id="exampleModal-{{ $detail_transaction->id }}" tabindex="-1"
+                    <div class="modal fade" id="exampleModal-{{ $paymentMethod->id }}" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -181,35 +138,14 @@
                                 </div>
                                 {{-- ubahable --}}
                                 <div class="modal-body">
-                                    <form action="{{ route('edit.detail', [$detail_transaction->id]) }}"
+                                    <form action="{{ route('edit.paymentMethod', [$paymentMethod->id]) }}"
                                         method="post">
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <div class="col-lg-12 mb-3">
-                                                <label class="form-label">Transaksi</label>
-                                                <select name="transaction_id" class="form-select">
-                                                    @forelse ($transactions as $transaction)
-                                                        <option value="{{ $transaction->id }}" {{ $detail_transaction->transaction_id == $transaction->id ? 'selected' : '' }}>{{ $transaction->kode_transaksi }} -
-                                                            {{ $transaction->customer->name . ' (customer)' }}</option>
-                                                    @empty
-                                                        <option hidden>Tidak ada Data</option>
-                                                    @endforelse
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-12 mb-3">
-                                                <label class="form-label">Menu</label>
-                                                <select name="stock_menu_id" class="form-select">
-                                                    @forelse ($stockMenus as $stockMenu)
-                                                        <option value="{{ $stockMenu->id }}" {{ $detail_transaction->stock_menu_id == $stockMenu->id ? 'selected' : '' }}>{{ $stockMenu->menu->name }}</option>
-                                                    @empty
-                                                        <option hidden>Tidak ada Data</option>
-                                                    @endforelse
-                                                </select>
-                                            </div>
-                                            <div class="col-6 mb-3">
-                                                <label for="" class="form-label">Jumlah Beli</label>
-                                                <input type="number" value="{{ $detail_transaction->totalAmount }}" name="totalAmount"
+                                            <div class="col-12 mb-3">
+                                                <label for="" class="form-label">Metode Pembayaran</label>
+                                                <input type="text" value="{{ $paymentMethod->method }}" name="totalAmount"
                                                     placeholder="Jumlah Beli" class="form-control">
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">

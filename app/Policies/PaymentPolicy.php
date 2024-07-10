@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\supplier;
+use App\Models\payment;
 use Illuminate\Auth\Access\Response;
 
-class SupplierPolicy
+class PaymentPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class SupplierPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, supplier $supplier): bool
+    public function view(User $user, payment $payment): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class SupplierPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, supplier $supplier): bool
+    public function update(User $user, payment $payment): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class SupplierPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, supplier $supplier): bool
+    public function delete(User $user, payment $payment): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class SupplierPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, supplier $supplier): bool
+    public function restore(User $user, payment $payment): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class SupplierPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, supplier $supplier): bool
+    public function forceDelete(User $user, payment $payment): bool
     {
         //
     }

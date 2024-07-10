@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatestockMenuRequest extends FormRequest
+class StorepaymentMethodRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,19 +22,15 @@ class UpdatestockMenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'menu_id' => ['required','exists:menus,id'],
-            'stock' => ['required','integer','min:0'],
+            'method'=>['required','string','unique:payment_methods,method,except,id']
         ];
     }
-
     public function messages()
     {
         return[
-            'menu_id.required'=>'Kolom menu harus diisi',
-            'menu_id.exists'=>'Kolom menu tidak valid',
-            'stock.required'=>'Kolom stock harus diisi',
-            'stock.integer'=>'Kolom stock harus berupa angka',
-            'stock.min'=>'Stock minimal adalah 1',
+            'method.required'=>'Metode pembayaran harus diisi',
+            'method.string'=>'Metode pembayaran harus berupa string',
+            'method.unique'=>'Metode pembayaran telah terdaftar',
         ];
     }
 }

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\menu;
-use App\Models\category;
-use App\Http\Requests\StoremenuRequest;
-use App\Http\Requests\UpdatemenuRequest;
 use App\UploadTrait;
+use App\Models\category;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoremenuRequest;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UpdatemenuRequest;
 
 class MenuController extends Controller
 {
@@ -49,6 +50,7 @@ class MenuController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'category_id' => $request->category_id,
+            'stock' => $request->stock,
             'gambar' => $gambar
         ]);
         return redirect()->back()->with('add', 'Data berhasil ditambahkan');
@@ -75,20 +77,25 @@ class MenuController extends Controller
      */
     public function update(UpdatemenuRequest $request, menu $menu)
     {
-            if ($request->hasFile('gambar')) {
-                $gambar = $this->upload('gambar', $request->gambar);
-            } else {
-                $gambar = $menu->gambar;
+        if ($request->hasFile('gambar')) {
+            $path = $menu->gambar;
+            if (Storage::exists($path)) {
+                Storage::delete($path);
             }
+            $gambar = $this->upload('gambar', $request->gambar);
+        } else {
+            $gambar = $menu->gambar;
+        }
 
 
-            $menu->update([
-                'name' => $request->name,
-                'price' => $request->price,
-                'category_id' => $request->category_id,
-                'gambar' => $gambar
-            ]);
-            return redirect()->route('menu')->with('edit', 'Data berhasil diperbarui');
+        $menu->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+            'stock' => $request->stock,
+            'gambar' => $gambar
+        ]);
+        return redirect()->route('menu')->with('edit', 'Data berhasil diperbarui');
     }
 
     /**
@@ -97,8 +104,17 @@ class MenuController extends Controller
     public function destroy(menu $menu)
     {
         try {
-            $menu->delete();
-            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            if($menu->gambar != null){
+                $path = $menu->gambar;
+                if (Storage::exists($path)) {
+                    Storage::delete($path);
+                }
+                $menu->delete();
+                return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            }else{
+                $menu->delete();
+                return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }

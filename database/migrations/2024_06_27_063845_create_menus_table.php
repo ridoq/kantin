@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('price');
-            $table->foreignId('category_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->string('gambar')->nullable();
+            $table->integer('price');
+            $table->integer('stock');
+            $table->foreignId('category_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });
     }

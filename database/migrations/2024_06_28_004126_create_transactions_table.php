@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('kode_transaksi')->unique();
             $table->foreignId('customer_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
-            $table->date('transactionDate');
             $table->foreignId('employee_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
+            $table->foreignId('menu_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
+            $table->integer('totalAmount');
+            $table->integer('priceTotal');
+            $table->date('transactionDate');
+            $table->string('status')->default('Unpaid');
             $table->timestamps();
         });
     }

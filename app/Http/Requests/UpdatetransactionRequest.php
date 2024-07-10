@@ -22,8 +22,8 @@ class UpdatetransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => 'required|exists:customers,id',
-            'transactionDate' => 'required',
+            'customer_id' => ['required','exists:customers,id'],
+            'transactionDate' => ['required','date','after:1 day ago'],
             'employee_id' => 'required|exists:employees,id',
         ];
     }
@@ -31,11 +31,13 @@ class UpdatetransactionRequest extends FormRequest
     public function messages()
     {
         return [
-            'customer_id.required' => 'Kolom pelanggan ini harus diisi',
-            'customer_id.exists' => 'Customer yang anda pilih tidak valid',
-            'transactionDate.required' => 'Kolom tanggal transaksi ini harus diisi',
-            'employee_id.required' => 'Kolom pegawai ini harus diisi',
-            'employee_id.exists' => 'Employee yang anda pilih tidak valid',
+            'customer_id.required' => 'Nama pelanggan harus diisi',
+            'customer_id.exists' => 'Nama pelanggan tidak valid',
+            'employee_id.required' => 'Nama pegawai harus diisi',
+            'employee_id.exists' => 'Nama pegawai tidak valid',
+            'transactionDate.required' => 'Tanggal transaksi harus diisi',
+            'transactionDate.date' => 'Tanggal transaksi tidak valid',
+            'transactionDate.after' => 'Tanggal transaksi tidak boleh kurang dari hari ini',
         ];
     }
 }

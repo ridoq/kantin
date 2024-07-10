@@ -1,5 +1,19 @@
 @extends('dashboard')
 @section('content')
+    @if (App\Models\Menu::where('status', 'not ready')->exists())
+        @php
+            $menuNames = App\Models\Menu::where('status', 'not ready')->get();
+        @endphp
+        <div class="alert alert-dismissible alert-warning fade show">
+            Menu
+            @forelse ($menuNames as $menuName)
+                <span class="text-black">{{ $menuName->name . ', ' }}</span>
+            @empty
+            @endforelse
+            masih tidak memiliki stock. Silahkan tambahkan stock terlebih dahulu
+            <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     @if (session('hapus'))
         <div class="alert alert-dismissible alert-danger fade show">
             {{ session('hapus') }}
@@ -113,7 +127,21 @@
                         @endif
                     </td>
                     <td>{{ $stockMenu->stock }}</td>
-                    <td><p class=" bg-primary d-flex justify-content-center align-items-center" style="border-radius:8px;color:white;height: 50px;width:50px;">{{ $stockMenu->stockNow }}</p></td>
+                    <td>
+                        @if ($stockMenu->stockNow == 0)
+                            <p class=" bg-secondary d-flex justify-content-center align-items-center"
+                                style="border-radius:8px;color:white;height: 50px;width:50px;">{{ $stockMenu->stockNow }}
+                            </p>
+                        @elseif($stockMenu->stockNow <= 5)
+                            <p class=" bg-warning d-flex justify-content-center align-items-center"
+                                style="border-radius:8px;color:white;height: 50px;width:50px;">{{ $stockMenu->stockNow }}
+                            </p>
+                        @elseif($stockMenu->stockNow > 5)
+                            <p class=" bg-primary d-flex justify-content-center align-items-center"
+                                style="border-radius:8px;color:white;height: 50px;width:50px;">{{ $stockMenu->stockNow }}
+                            </p>
+                        @endif
+                    </td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
                             <div class="d-flex justify-content-end">
@@ -147,14 +175,9 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb-3">
                                             <label class="form-label">Nama Menu</label>
-                                            <select name="menu_id" class="form-select">
-                                                @foreach ($menus as $menu)
-                                                    <option value="{{ $menu->id }}"
-                                                        {{ $stockMenu->menu_id == $menu->id ? 'selected' : '' }}>
-                                                        {{ $menu->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <input type="text" class="form-control" disabled
+                                                value="{{ $stockMenu->menu->name }}">
+                                            <input type="hidden" value="{{ $stockMenu->menu->id }}" name="menu_id">
                                         </div>
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Stok</label>

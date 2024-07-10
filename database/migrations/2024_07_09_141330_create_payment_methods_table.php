@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stock_menus', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('menu_id')->constrained()->restrictOnDelete()->cascadeOnUpdate();
-            $table->integer('stock');
-            $table->integer('stockNow');
+            $table->string('method')->unique();
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stock_menus');
+        Schema::dropIfExists('payment_methods');
     }
 };

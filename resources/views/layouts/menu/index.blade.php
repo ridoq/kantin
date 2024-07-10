@@ -70,6 +70,11 @@
                                 <input type="number" name="price" placeholder="Harga" class="form-control"
                                     value="{{ old('price') }}">
                             </div>
+                            <div class="col-lg-6 mb-3">
+                                <label class="form-label">Stock Menu</label>
+                                <input type="number" name="stock" placeholder="Stock" class="form-control"
+                                    value="{{ old('stock') }}">
+                            </div>
                             <div class="col-lg-12 mb-3">
                                 <label class="form-label">Kategori Menu</label>
                                 <select name="category_id" class="form-select" required>
@@ -104,6 +109,7 @@
                 <td>Gambar</td>
                 <td>Menu</td>
                 <td>Harga</td>
+                <td>Stock</td>
                 <td>Kategori Menu</td>
                 <td>aksi</td>
             </tr>
@@ -123,6 +129,7 @@
                         @endif
                     <td>{{ $menu->name }}</td>
                     <td>{{ $menu->price }}</td>
+                    <td>{{ $menu->stock }}</td>
                     <td>{{ $menu->category->name }}</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">
@@ -183,10 +190,16 @@
                                             <label for="gambar" class="form-label">Gambar</label>
                                             <input type="file" name="gambar" id="gambar" class="form-control">
                                             @if ($menu->gambar)
-                                                <img src="{{ asset('storage/' . $menu->gambar) }}" alt=""
-                                                    style="max-width: 200px;margin-top:10px;">
+                                            <img src="{{ asset('storage/' . $menu->gambar) }}" alt=""
+                                            style="max-width: 200px;margin-top:10px;">
                                             @endif
                                         </div>
+                                        <div class="col-lg-12 mb-3">
+                                            <label class="form-label">Stock</label>
+                                            <input type="number" name="stock" placeholder="Stock"
+                                                class="form-control" value="{{ $menu->stock }}">
+                                        </div>
+
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                             <button type="submit" class="btn btn-primary">Update</button>
                                         </div>

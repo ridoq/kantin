@@ -3,10 +3,10 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\detail_transaction;
+use App\Models\paymentMethod;
 use Illuminate\Auth\Access\Response;
 
-class DetailTransactionPolicy
+class PaymentMethodPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class DetailTransactionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, detail_transaction $detailTransaction): bool
+    public function view(User $user, paymentMethod $paymentMethod): bool
     {
         //
     }
@@ -35,7 +35,7 @@ class DetailTransactionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, detail_transaction $detailTransaction): bool
+    public function update(User $user, paymentMethod $paymentMethod): bool
     {
         //
     }
@@ -43,7 +43,7 @@ class DetailTransactionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, detail_transaction $detailTransaction): bool
+    public function delete(User $user, paymentMethod $paymentMethod): bool
     {
         //
     }
@@ -51,7 +51,7 @@ class DetailTransactionPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, detail_transaction $detailTransaction): bool
+    public function restore(User $user, paymentMethod $paymentMethod): bool
     {
         //
     }
@@ -59,7 +59,7 @@ class DetailTransactionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, detail_transaction $detailTransaction): bool
+    public function forceDelete(User $user, paymentMethod $paymentMethod): bool
     {
         //
     }
