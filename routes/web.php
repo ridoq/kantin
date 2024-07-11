@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('delete/transaction/{transaction}', [TransactionController::class, 'destroy'])->name('delete.transaction');
 
     Route::get('payment', [PaymentController::class, 'index'])->name('payment');
+    Route::get('trashPayment', [PaymentController::class, 'trashPayment'])->name('trashPayment');
+    Route::get('restorePayment/{id}', [PaymentController::class, 'restorePayment'])->name('restorePayment');
     Route::post('create/payment', [PaymentController::class, 'store'])->name('create.payment');
     Route::put('edit/payment/{payment}', [PaymentController::class, 'update'])->name('edit.payment');
     Route::delete('delete/payment/{payment}', [PaymentController::class, 'destroy'])->name('delete.payment');

@@ -47,43 +47,10 @@
             <input type="text" name="search" placeholder="cari data" class="form-control">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
         </form>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Tambah Data
-        </button>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                {{-- editable --}}
-                <div class="modal-body">
-                    <form action="/create/payment" method="post">
-                        @csrf
-                        @method('POST')
-                        <div class="row">
-
-                            <div class="col-6 mb-3">
-                                <label for="" class="form-label">Jumlah Beli</label>
-                                <input type="number" value="{{ old('totalAmount') }}" name="totalAmount"
-                                    placeholder="Jumlah Beli" class="form-control">
-                            </div>
-                            <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
-                                <button type="submit" class="btn btn-secondary">Tambah</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 
 
-    <table class="table">
+    <table class="table mt-3">
         <thead>
             <tr>
                 <td>No</td>
@@ -168,8 +135,7 @@
                                                 <div class="col-12 mb-3">
                                                     <label for="" class="form-label">Total bayar</label>
                                                     <input type="number" value="{{ old('totalPayment') }}"
-                                                        placeholder="Total Bayar" name="totalPayment"
-                                                        class="form-control">
+                                                        placeholder="Total Bayar" name="totalPayment" class="form-control">
                                                 </div>
                                                 <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                                     <button type="submit" class="btn btn-primary">Bayar</button>
@@ -200,28 +166,27 @@
                         <td>Rp. {{ number_format($payment->change, 0, ',', '.') }}</td>
                         <td class="text-primary">{{ $payment->transaction->status }}</td>
                         @if ($payment->transaction->status == 'Paid')
-                        <td>
-                            <div class="d-flex gap-2 align-items-center">
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal-{{ $payment->id }}">
-                                        Selesaikan
-                                    </button>
+                            <td>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal-{{ $payment->id }}">
+                                            Selesaikan
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
                         @elseif($payment->transaction->status == 'Complete')
-                        <td>
-                            <div class="d-flex gap-2 align-items-center">
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-secondary" disabled data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal-{{ $payment->id }}">
-                                        Selesai
-                                    </button>
+                            <td>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal2-{{ $payment->id }}">
+                                            <i class="mdi mdi-trash-can"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-
+                            </td>
                         @endif
                     </tr>
                     <div class="modal fade" id="exampleModal-{{ $payment->id }}" tabindex="-1"
@@ -232,22 +197,54 @@
                                     <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('edit.payment', [$payment->id]) }}" method="post">
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('edit.payment', [$payment->id]) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <div class="row">
-                                            <p><span class="fw-bold fs-3"> Apakah anda yakin menyelesaikan transaksi ini? </span><br><br>
+                                            <p><span class="fw-bold fs-3"> Apakah anda yakin menyelesaikan transaksi ini?
+                                                </span><br><br>
                                                 Pastikan pesanan telah sampai ke pelanggan dan pembayarannya telah selesai.
                                             </p>
                                             <div class="col-lg-12 mb-3 mt-5 d-flex justify-content-end align-items-center">
-                                                <button type="button" class="btn btn-secondary me-3" data-bs-dismiss="modal"aria-label="Close">Batal</button>
+                                                <button type="button" class="btn btn-secondary me-3"
+                                                    data-bs-dismiss="modal"aria-label="Close">Batal</button>
                                                 <button type="submit" class="btn btn-success">Selesai</button>
                                             </div>
                                         </div>
                                     </form>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal2-{{ $payment->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="delete/payment/{{ $payment->id }}" method="post" class="p-0 m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="row">
+                                            <p><span class="fw-bold fs-3"> Apakah anda yakin menghapus data transaksi ini?
+                                                </span><br><br>
+                                                Data ini sementara akan masuk ke dalam menu<span
+                                                    class="text-primary">History</span>
+                                            </p>
+                                            <div class="col-lg-12 mb-3 mt-5 d-flex justify-content-end align-items-center">
+                                                <button type="button" class="btn btn-secondary me-3"
+                                                    data-bs-dismiss="modal"aria-label="Close">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

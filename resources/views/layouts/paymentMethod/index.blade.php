@@ -145,8 +145,8 @@
                                         <div class="row">
                                             <div class="col-12 mb-3">
                                                 <label for="" class="form-label">Metode Pembayaran</label>
-                                                <input type="text" value="{{ $paymentMethod->method }}" name="totalAmount"
-                                                    placeholder="Jumlah Beli" class="form-control">
+                                                <input type="text" value="{{ $paymentMethod->method }}" name="method"
+                                                    placeholder="Metode pembayaran" class="form-control">
                                             </div>
                                             <div class="col-lg-12 d-flex justify-content-end align-items-center">
                                                 <button type="submit" class="btn btn-primary w-25">Update</button>

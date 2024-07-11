@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\payment;
-use App\Http\Requests\StorepaymentRequest;
-use App\Http\Requests\UpdatepaymentRequest;
 use App\Models\menu;
-use App\Models\paymentMethod;
+use App\Models\payment;
 use App\Models\transaction;
 use Illuminate\Http\Request;
+use App\Models\paymentMethod;
+use App\Http\Requests\StorepaymentRequest;
+use App\Http\Requests\UpdatepaymentRequest;
 
 class PaymentController extends Controller
 {
@@ -17,11 +17,32 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
-        $payments = payment::whereRaw('CAST(totalPayment AS CHAR) LIKE?', ['%'.$request->search.'%'])
-        ->get();
+        $payments = payment::whereRaw('CAST(totalPayment AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->get();
         $transactions = transaction::all();
         $paymentMethods = paymentMethod::all();
-        return view('layouts.payment.index',compact('payments','transactions','paymentMethods'));
+        return view('layouts.payment.index', compact('payments', 'transactions', 'paymentMethods'));
+    }
+
+    public function trashPayment(Request $request)
+    {
+        $payments = payment::onlyTrashed()->whereRaw('CAST(totalPayment AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->get();
+        $transactions = transaction::all();
+        $paymentMethods = paymentMethod::all();
+        return view('layouts.payment.history', compact('payments', 'transactions', 'paymentMethods'));
+    }
+    public function restorePayment($id)
+    {
+        try {
+            $payments = payment::withTrashed()->findOrFail($id);
+            if (!empty($payments)) {
+                $payments->restore();
+            }
+            return redirect()->route('payment')->with('add', 'Data berhasil dikembalikan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Data yang dikembalikan tidak valid');
+        }
     }
 
     /**
@@ -39,17 +60,17 @@ class PaymentController extends Controller
     {
         $tr = transaction::find($request->transaction_id);
         $harga = menu::find($tr->menu_id);
-        if($request->totalPayment < $tr->priceTotal){
-            return redirect()->route('payment')->with('hapus','Dana tidak cukup untuk melakukan transaksi ini');
-        }else{
+        if ($request->totalPayment < $tr->priceTotal) {
+            return redirect()->route('payment')->with('hapus', 'Dana tidak cukup untuk melakukan transaksi ini');
+        } else {
             payment::create([
-                'transaction_id'=>$request->transaction_id,
-                'paymentMethod_id'=>$request->paymentMethod_id,
-                'totalPayment'=>$request->totalPayment,
-                'change'=>$request->totalPayment - $tr->priceTotal,
+                'transaction_id' => $request->transaction_id,
+                'paymentMethod_id' => $request->paymentMethod_id,
+                'totalPayment' => $request->totalPayment,
+                'change' => $request->totalPayment - $tr->priceTotal,
             ]);
-            $tr->update(['status'=>'Paid']);
-            return redirect()->route('payment')->with('add','Pembayaran telah berhasil');
+            $tr->update(['status' => 'Paid']);
+            return redirect()->route('payment')->with('add', 'Pembayaran telah berhasil');
         }
     }
 
@@ -76,9 +97,9 @@ class PaymentController extends Controller
     {
         $tr = transaction::find($payment->transaction_id);
         $tr->update([
-            'status'=>'Complete'
+            'status' => 'Complete'
         ]);
-        return redirect()->route('payment')->with('add','Transaksi telah selesai');
+        return redirect()->route('payment')->with('add', 'Transaksi telah selesai');
     }
 
     /**
@@ -86,6 +107,7 @@ class PaymentController extends Controller
      */
     public function destroy(payment $payment)
     {
-        //
+        $payment->delete();
+        return redirect()->route('trashPayment')->with('hapus', 'Data berhasil dipindahkan ke dalam history');
     }
 }

@@ -23,9 +23,10 @@ class StoremenuRequest extends FormRequest
     {
         return [
             'name'=>['required','unique:menus,name,except,id'],
-            'price'=>['required','numeric','min:1'],
-            'category_id'=>['required','exists:categories,id'],
             'gambar'=>['image', 'mimes:png,jpg,jpeg', 'max:2048'],
+            'price'=>['required','numeric','min:1'],
+            'stock'=>['required','numeric','min:1'],
+            'category_id'=>['required','exists:categories,id'],
         ];
     }
     public function messages()
@@ -33,14 +34,17 @@ class StoremenuRequest extends FormRequest
         return [
             'name.required'=> 'Menu harus diisi',
             'name.unique'=> 'Menu telah terdaftar',
-            'price.required'=>'Harga harus diisi',
-            'price.numeric'=>'Harga harus berupa angka',
-            'price.min'=> 'Harga minimal adalah 1 rupiah',
-            'category_id.required'=>'Kategori harus diisi',
-            'category_id.exists'=>'Kategori yang dipilih tidak valid',
             'gambar.image'=>'Gambar menu harus berupa gambar',
             'gambar.mimes'=>'Gambar menu harus berformat png,jpg,jpeg',
             'gambar.max'=>'Gambar menu maksimal 2 MB',
+            'price.required'=>'Harga harus diisi',
+            'price.numeric'=>'Harga harus berupa angka',
+            'price.min'=> 'Harga minimal adalah 1 rupiah',
+            'stock.required'=>'Stok harus diisi',
+            'stock.numeric'=>'Stok harus berupa angka',
+            'stock.min'=> 'Stok minimal adalah 1',
+            'category_id.required'=>'Kategori harus diisi',
+            'category_id.exists'=>'Kategori yang dipilih tidak valid',
         ];
 
     }

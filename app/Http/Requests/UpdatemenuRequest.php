@@ -28,6 +28,7 @@ class UpdatemenuRequest extends FormRequest
                 Rule::unique('menus','name')->ignore($this->menu->id)
             ],
             'price' => ['required', 'numeric', 'min:1'],
+            'stock' => ['required', 'numeric', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
             'gambar' => ['image', 'mimes:png,jpg,jpeg', 'max:2048'],
         ];
@@ -40,6 +41,9 @@ class UpdatemenuRequest extends FormRequest
             'price.required' => 'Harga harus diisi',
             'price.numeric' => 'Harga harus berupa angka',
             'price.min' => 'Harga minimal adalah 1 rupiah',
+            'stock.required' => 'Stok harus diisi',
+            'stock.numeric' => 'Stok harus berupa angka',
+            'stock.min' => 'Stok minimal adalah 0',
             'category_id.required' => 'Kategori harus diisi',
             'category_id.exists' => 'Kategori yang dipilih tidak valid',
             'gambar.image' => 'Gambar menu harus berupa gambar',

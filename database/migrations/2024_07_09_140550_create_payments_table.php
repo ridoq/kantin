@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('paymentMethod_id')->constrained('payment_methods')->restrictOnDelete()->cascadeOnUpdate();
             $table->integer('totalPayment');
             $table->integer('change');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -27,5 +28,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('payments');
+        Schema::table('payments', function(Blueprint $table){
+            $table->dropSoftDeletes();
+        });
     }
 };

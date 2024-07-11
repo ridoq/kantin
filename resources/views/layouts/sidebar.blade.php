@@ -28,12 +28,12 @@
         <li class="menu-item">
             <a href="/" class="menu-link">
                 <i class="menu-icon tf-icons mdi mdi-home-outline"></i>
-                <div>Dasbor</div>
+                <div> Dasbor</div>
             </a>
         </li>
 
         <!-- datas -->
-        <li class="menu-item open">
+        <li class="menu-item open ">
             <a href="#" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons mdi mdi-form-select"></i>
                 <div>Data-data</div>
@@ -78,9 +78,25 @@
                         </div>
                     </a>
                 </li>
+                <li class="menu-item open mt-2 pt-2" style="border-top: 1px solid rgba(0,0,0,.1)">
+                    <a href="#" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons mdi mdi-history"></i>
+                        <div> History</div>
+                    </a>
 
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="/trashPayment" class="menu-link">
+                                <div>Pembayaran
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
             </ul>
         </li>
+
     </ul>
 
     <script>

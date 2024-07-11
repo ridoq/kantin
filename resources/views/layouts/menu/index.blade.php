@@ -60,7 +60,7 @@
                         @csrf
                         @method('POST')
                         <div class="row">
-                            <div class="col-lg-6 mb-3">
+                            <div class="col-lg-12 mb-3">
                                 <label class="form-label">Menu</label>
                                 <input type="text" name="name" placeholder="Menu" class="form-control"
                                     value="{{ old('menu') }}">
@@ -128,7 +128,7 @@
                                 style="background-size: cover;background-position:center;width: 200px;height:150px;">
                         @endif
                     <td>{{ $menu->name }}</td>
-                    <td>{{ $menu->price }}</td>
+                    <td>Rp. {{ number_format($menu->price, 0, ',', '.') }}</td>
                     <td>{{ $menu->stock }}</td>
                     <td>{{ $menu->category->name }}</td>
                     <td>
@@ -165,7 +165,7 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
-                                        <div class="col-lg-6 mb-3">
+                                        <div class="col-lg-12 mb-3">
                                             <label class="form-label">Menu</label>
                                             <input type="text" name="name" placeholder="Menu" class="form-control"
                                                 value="{{ $menu->name }}">
@@ -175,7 +175,7 @@
                                             <input type="number" name="price" placeholder="harga"
                                                 class="form-control" value="{{ $menu->price }}">
                                         </div>
-                                        <div class="col-lg-12 mb-3">
+                                        <div class="col-lg-6 mb-3">
                                             <label class="form-label">Kategori Menu</label>
                                             <select name="category_id" class="form-select">
                                                 @foreach ($categories as $category)

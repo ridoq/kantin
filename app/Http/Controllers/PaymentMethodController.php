@@ -59,7 +59,10 @@ class PaymentMethodController extends Controller
      */
     public function update(UpdatepaymentMethodRequest $request, paymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->update([
+            'method'=>$request->method
+        ]);
+        return redirect()->back()->with('add','Data berhasil diperbarui');
     }
 
     /**
@@ -67,6 +70,7 @@ class PaymentMethodController extends Controller
      */
     public function destroy(paymentMethod $paymentMethod)
     {
-        //
+        $paymentMethod->delete();
+        return redirect()->back()->with('hapus','Data berhasil dihapus');
     }
 }

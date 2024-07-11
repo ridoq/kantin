@@ -90,7 +90,7 @@
                                 <label class="form-label">Menu</label>
                                 <select name="menu_id" class="form-select">
                                     @forelse ($menus as $menu)
-                                        <option value="{{ $menu->id }}">{{ $menu->name }}</option>
+                                        <option value="{{ $menu->id }}">{{ $menu->name . " (stok : " . $menu->stock .')'}}</option>
                                     @empty
                                         <option hidden>Tidak ada Data</option>
                                     @endforelse
@@ -132,7 +132,7 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $transaction->kode_transaksi }}</td>
                     <td>{{ $transaction->customer->name }}</td>
-                    <td>{{ $transaction->menu->name }}</td>
+                    <td>{{ $transaction->menu->name}}</td>
                     <td>{{ $transaction->totalAmount }}</td>
                     <td>Rp. {{ number_format($transaction->priceTotal, 0, ',', '.') }}</td>
                     <td>{{ date('l, d F Y', strtotime($transaction->transactionDate)) }}</td>

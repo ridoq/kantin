@@ -89,19 +89,22 @@ class TransactionController extends Controller
 
         $menu = menu::findOrFail($request->menu_id);
         $priceTotal =$menu->price * $request->totalAmount;
-        // Buat transaksi baru
-        Transaction::create([
-            'kode_transaksi' => $kode_pemesanan,
-            'customer_id' => $request->customer_id,
-            'employee_id' => $request->employee_id,
-            'menu_id' => $request->menu_id,
-            'stock_menu_id' => $request->stock_menu_id,
-            'totalAmount' => $request->totalAmount,
-            'priceTotal' => $priceTotal,
-            'transactionDate' => now()->toDateString(),
-        ]);
-        $menu->stock -= $request->totalAmount;
-        $menu->save();
+        if($menu->stock < $request->totalAmount){
+            return redirect()->back()->with('hapus', "Stok Menu $menu->name kurang");
+        }else{
+            Transaction::create([
+                'kode_transaksi' => $kode_pemesanan,
+                'customer_id' => $request->customer_id,
+                'employee_id' => $request->employee_id,
+                'menu_id' => $request->menu_id,
+                'stock_menu_id' => $request->stock_menu_id,
+                'totalAmount' => $request->totalAmount,
+                'priceTotal' => $priceTotal,
+                'transactionDate' => now()->toDateString(),
+            ]);
+            $menu->stock -= $request->totalAmount;
+            $menu->save();
+        }
 
         return redirect()->back()->with('add', 'Data berhasil ditambahkan');
     }

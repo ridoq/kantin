@@ -76,27 +76,32 @@ class MenuController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdatemenuRequest $request, menu $menu)
-    {
-        if ($request->hasFile('gambar')) {
-            $path = $menu->gambar;
-            if (Storage::exists($path)) {
-                Storage::delete($path);
-            }
-            $gambar = $this->upload('gambar', $request->gambar);
-        } else {
-            $gambar = $menu->gambar;
+{
+    if ($request->hasFile('gambar')) {
+        // Hapus file gambar lama jika ada
+        $path = $menu->gambar;
+        if ($path && Storage::exists($path)) {
+            Storage::delete($path);
         }
 
-
-        $menu->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'category_id' => $request->category_id,
-            'stock' => $request->stock,
-            'gambar' => $gambar
-        ]);
-        return redirect()->route('menu')->with('edit', 'Data berhasil diperbarui');
+        // Upload file gambar baru
+        $gambar = $this->upload('gambar', $request->gambar);
+    } else {
+        $gambar = $menu->gambar;
     }
+
+    // Update data menu
+    $menu->update([
+        'name' => $request->name,
+        'price' => $request->price,
+        'category_id' => $request->category_id,
+        'stock' => $request->stock,
+        'gambar' => $gambar
+    ]);
+
+    return redirect()->route('menu')->with('edit', 'Data berhasil diperbarui');
+}
+
 
     /**
      * Remove the specified resource from storage.
@@ -105,11 +110,11 @@ class MenuController extends Controller
     {
         try {
             if($menu->gambar != null){
+                $menu->delete();
                 $path = $menu->gambar;
                 if (Storage::exists($path)) {
                     Storage::delete($path);
                 }
-                $menu->delete();
                 return redirect()->back()->with('hapus', 'Data berhasil dihapus');
             }else{
                 $menu->delete();
