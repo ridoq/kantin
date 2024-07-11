@@ -64,7 +64,7 @@ class PaymentController extends Controller
             if (!empty($payments)) {
                 $payments->forceDelete();
             }
-            return redirect()->route('payment')->with('hapus', 'Data berhasil dihapus');
+            return redirect()->route('payment')->with('add', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('hapus', 'Data yang dihapus tidak valid');
         }
@@ -133,6 +133,6 @@ class PaymentController extends Controller
     public function destroy(payment $payment)
     {
         $payment->delete();
-        return redirect()->route('trashPayment')->with('hapus', 'Data berhasil dipindahkan ke dalam history');
+        return redirect()->route('trashPayment')->with('add', 'Data berhasil dipindahkan ke dalam history');
     }
 }

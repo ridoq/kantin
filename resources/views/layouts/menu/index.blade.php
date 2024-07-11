@@ -56,46 +56,46 @@
                 </div>
                 {{-- editable --}}
                 <div class="modal-body">
-                    <form action="/create/menu" method="post" enctype="multipart/form-data">
-                        @csrf
-                        @method('POST')
-                        <div class="row">
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Menu</label>
-                                <input type="text" name="name" placeholder="Menu" class="form-control"
-                                    value="{{ old('menu') }}">
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">Harga Menu</label>
-                                <input type="number" name="price" placeholder="Harga" class="form-control"
-                                    value="{{ old('price') }}">
-                            </div>
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">Stock Menu</label>
-                                <input type="number" name="stock" placeholder="Stock" class="form-control"
-                                    value="{{ old('stock') }}">
-                            </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Kategori Menu</label>
-                                <select name="category_id" class="form-select" required>
-                                    @forelse ($categories as $category)
-                                        <option value="{{ $category->id }}"> {{ $category->name }}</option>
-
-                                    @empty
-                                        <option hidden>Tidak ada data</option>
-                                    @endforelse ()
-                                </select>
-                            </div>
-                            <div class="col-lg-12 mb-3">
-                                <label class="form-label">Gambar</label>
-                                <input type="file" name="gambar" placeholder="gambar" class="form-control">
-                            </div>
-
-                            <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
-                                <button type="submit" class="btn btn-secondary">Tambah</button>
-                            </div>
+                <form action="/create/menu" method="post" enctype="multipart/form-data">
+                    @csrf
+                    @method('POST')
+                    <div class="row">
+                        <div class="col-lg-12 mb-3">
+                            <label class="form-label">Menu</label>
+                            <input type="text" name="name" placeholder="Menu" class="form-control"
+                                value="{{ old('menu') }}">
                         </div>
-                    </form>
+                        <div class="col-lg-6 mb-3">
+                            <label class="form-label">Harga Menu</label>
+                            <input type="number" name="price" placeholder="Harga" class="form-control"
+                                value="{{ old('price') }}">
+                        </div>
+                        <div class="col-lg-6 mb-3">
+                            <label class="form-label">Stock Menu</label>
+                            <input type="number" name="stock" placeholder="Stock" class="form-control"
+                                value="{{ old('stock') }}">
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label class="form-label">Kategori Menu</label>
+                            <select name="category_id" class="form-select" required>
+                                @forelse ($categories as $category)
+                                    <option value="{{ $category->id }}"> {{ $category->name }}</option>
+
+                                @empty
+                                    <option hidden>Tidak ada data</option>
+                                @endforelse ()
+                            </select>
+                        </div>
+                        <div class="col-lg-12 mb-3">
+                            <label class="form-label">Gambar</label>
+                            <input type="file" name="gambar" placeholder="gambar" class="form-control">
+                        </div>
+
+                        <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
+                            <button type="submit" class="btn btn-secondary">Tambah</button>
+                        </div>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = category::where('name', 'like', "%$request->search%")->get();
-        return view('layouts.category.index',compact('categories'));
+        return view('layouts.category.index', compact('categories'));
     }
 
     /**
@@ -31,10 +31,14 @@ class CategoryController extends Controller
      */
     public function store(StorecategoryRequest $request)
     {
-        category::create([
-            'name' => $request->name
-        ]);
-        return redirect()->back()->with('add','Data berhasil ditambahkan');
+        try {
+            category::create([
+                'name' => ucwords($request->name)
+            ]);
+            return redirect()->back()->with('add', 'Data berhasil ditambahkan');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Kategori telah terdaftar');
+        }
     }
 
     /**
@@ -58,10 +62,14 @@ class CategoryController extends Controller
      */
     public function update(UpdatecategoryRequest $request, category $category)
     {
+        try {
             $category->update([
-                'name' => $request->name,
+                'name' => ucwords($request->name)
             ]);
             return redirect()->route('category')->with('edit', 'Data berhasil diperbarui.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Kategori telah terdaftar');
+        }
     }
 
     /**
@@ -69,11 +77,11 @@ class CategoryController extends Controller
      */
     public function destroy(category $category)
     {
-        try{
+        try {
             $category->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('add', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
     }
 }

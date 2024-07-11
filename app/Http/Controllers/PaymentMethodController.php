@@ -32,10 +32,14 @@ class PaymentMethodController extends Controller
      */
     public function store(StorepaymentMethodRequest $request)
     {
-        paymentMethod::create([
-            'method'=>$request->method
-        ]);
-        return redirect()->route('paymentMethod')->with('add','Data Berhasil ditambah');
+        try {
+            paymentMethod::create([
+                'method' => strtoupper($request->method)
+            ]);
+            return redirect()->route('paymentMethod')->with('add', 'Data Berhasil ditambah');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Metode pembayaran telah terdaftar');
+        }
     }
 
     /**
@@ -59,10 +63,14 @@ class PaymentMethodController extends Controller
      */
     public function update(UpdatepaymentMethodRequest $request, paymentMethod $paymentMethod)
     {
-        $paymentMethod->update([
-            'method'=>$request->method
-        ]);
-        return redirect()->back()->with('add','Data berhasil diperbarui');
+        try {
+            $paymentMethod->update([
+                'method' => strtoupper($request->method)
+            ]);
+            return redirect()->back()->with('add', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Metode pembayaran telah terdaftar');
+        }
     }
 
     /**
@@ -70,12 +78,11 @@ class PaymentMethodController extends Controller
      */
     public function destroy(paymentMethod $paymentMethod)
     {
-        try{
+        try {
             $paymentMethod->delete();
-            return redirect()->back()->with('hapus','Data berhasil dihapus');
-        }catch(\Exception $e){
-            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih dipakai di tabel yang lain');
-
+            return redirect()->back()->with('add', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih dipakai di tabel yang lain');
         }
     }
 }

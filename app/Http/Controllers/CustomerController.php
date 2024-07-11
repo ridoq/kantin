@@ -83,7 +83,7 @@ class CustomerController extends Controller
     {
         try {
             $customer->delete();
-            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            return redirect()->back()->with('add', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }
