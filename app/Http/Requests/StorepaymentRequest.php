@@ -22,7 +22,19 @@ class StorepaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'paymentMethod_id'=>['required','exists:payment_methods,id'],
+            'totalPayment'=>['required','numeric','min:1'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'paymentMethod_id.required'=> 'Metode pembayaran harus diisi',
+            'paymentMethod_id.exists'=> 'Metode pembayaran tidak valid',
+            'totalPayment.required'=> 'Total pembayaran harus diisi',
+            'totalPayment.numeric'=> 'Total pembayaran harus berupa angka',
+            'totalPayment.min'=> 'Total pembayaran minimal adalah 1 rupiah',
         ];
     }
 }

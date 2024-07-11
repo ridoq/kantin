@@ -71,7 +71,7 @@
                 @forelse ($payments as $payment)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
-                        <td>{{ $payment->trashTransaction->kode_transaksi }}</td>
+                        <td>{{ $payment->transaction->kode_transaksi }}</td>
                         <td>
                             Nama : <span class="fw-bold">{{ $payment->transaction->customer->name }} </span><br>
                             Menu : <span class="fw-bold">{{ $payment->transaction->menu->name }}</span> <br>
@@ -90,6 +90,12 @@
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal-{{ $payment->id }}">
                                         Kembalikan
+                                    </button>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2-{{ $payment->id }}">
+                                        <i class="mdi mdi-trash-can"></i>
                                     </button>
                                 </div>
                             </div>
@@ -117,6 +123,36 @@
                                                 <button type="button" class="btn btn-secondary me-3"
                                                     data-bs-dismiss="modal"aria-label="Close">Batal</button>
                                                 <button type="submit" class="btn btn-primary">Kembalikan</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal2-{{ $payment->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('deletePermanentPayment', [$payment->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="row">
+                                            <p><span class="fw-bold fs-3"> Apakah anda ingin menghapus data ini secara <span class="text-danger">Permanent</span>?
+                                                </span><br><br>
+                                                Data tidak akan dapat dipulihkan
+                                            </p>
+                                            <div class="col-lg-12 mb-3 mt-5 d-flex justify-content-end align-items-center">
+                                                <button type="button" class="btn btn-secondary me-3"
+                                                    data-bs-dismiss="modal"aria-label="Close">Batal</button>
+                                                <button type="submit" class="btn btn-danger">Hapus Permanen</button>
                                             </div>
                                         </div>
                                     </form>

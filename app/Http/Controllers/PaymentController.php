@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\paymentMethod;
 use App\Http\Requests\StorepaymentRequest;
 use App\Http\Requests\UpdatepaymentRequest;
+use App\Models\customer;
 
 class PaymentController extends Controller
 {
@@ -18,8 +19,20 @@ class PaymentController extends Controller
     public function index(Request $request)
     {
         $payments = payment::whereRaw('CAST(totalPayment AS CHAR) LIKE?', ['%' . $request->search . '%'])
+            ->orWhereRelation('transaction','kode_transaksi','LIKE',"%$request->search%")
+            ->orWhereRelation('transaction','totalAmount','LIKE',"%$request->search%")
+            ->orWhereRelation('transaction','priceTotal','LIKE',"%$request->search%")
+            ->orWhereRelation('transaction','status','LIKE',"%$request->search%")
+            ->orWhereRelation('paymentMethod','method','LIKE',"%$request->search%")
+            ->orWhereRaw('CAST(totalPayment as CHAR) LIKE?', ['%'.$request->search.'%'])
+            ->orWhereRaw('CAST(change as CHAR) LIKE?', ['%'.$request->search.'%'])
             ->get();
-        $transactions = transaction::all();
+        $transactions = transaction::whereRaw('kode_transaksi LIKE?',['%'.$request->search.'%'])
+        ->orWhereRelation('customer','name','LIKE',"%$request->search%")
+        ->orWhereRelation('menu','name','LIKE',"%$request->search%")
+        ->orWhereRelation('employee','name','LIKE',"%$request->search%")
+        ->orWhereRaw('CAST(totalAmount as CHAR) LIKE?',['%'.$request->search.'%'])
+        ->get();
         $paymentMethods = paymentMethod::all();
         return view('layouts.payment.index', compact('payments', 'transactions', 'paymentMethods'));
     }
@@ -42,6 +55,18 @@ class PaymentController extends Controller
             return redirect()->route('payment')->with('add', 'Data berhasil dikembalikan');
         } catch (\Exception $e) {
             return redirect()->back()->with('hapus', 'Data yang dikembalikan tidak valid');
+        }
+    }
+    public function deletePermanentPayment($id)
+    {
+        try {
+            $payments = payment::withTrashed()->findOrFail($id);
+            if (!empty($payments)) {
+                $payments->forceDelete();
+            }
+            return redirect()->route('payment')->with('hapus', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('hapus', 'Data yang dihapus tidak valid');
         }
     }
 

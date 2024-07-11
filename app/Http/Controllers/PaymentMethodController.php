@@ -70,7 +70,12 @@ class PaymentMethodController extends Controller
      */
     public function destroy(paymentMethod $paymentMethod)
     {
-        $paymentMethod->delete();
-        return redirect()->back()->with('hapus','Data berhasil dihapus');
+        try{
+            $paymentMethod->delete();
+            return redirect()->back()->with('hapus','Data berhasil dihapus');
+        }catch(\Exception $e){
+            return redirect()->back()->with('restrict','Data tidak dapat dihapus karena masih dipakai di tabel yang lain');
+
+        }
     }
 }

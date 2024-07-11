@@ -26,7 +26,7 @@ class TransactionController extends Controller
             ->get();
         $menus = menu::all();
         $customers = customer::all();
-        $employees = customer::all();
+        $employees = employee::all();
         return view('layouts.transaction.index', compact('transactions','employees', 'customers', 'menus'));
     }
 
@@ -129,21 +129,42 @@ class TransactionController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdatetransactionRequest $request, transaction $transaction)
-    {
-        $menu = menu::findOrFail($request->menu_id);
-        if ($menu->stock < $request->totalAmount) {
-            return redirect()->back()->with('hapus', 'Stok tidak mencukupi.');
-        }
-        $priceTotal = number_format($menu->price * $request->totalAmount, 2, ',', '.');
+{
+    $currentMenu = $transaction->menu;
+    $newMenu = menu::findOrFail($request->menu_id);
+    $stockkk = $newMenu->stock += $transaction->totalAmount;
+
+    if ($stockkk < $request->totalAmount) {
+        return redirect()->back()->with('hapus', 'Stok tidak mencukupi.');
+    }
+    elseif($transaction->menu_id == $request->menu_id){
+        $priceTotal = $newMenu->price * $request->totalAmount;
         $transaction->update([
             'customer_id' => $request->customer_id,
-            'stock_menu_id' => $request->menu_id,
+            'menu_id' => $request->menu_id,
             'totalAmount' => $request->totalAmount,
             'priceTotal' => $priceTotal,
             'transactionDate' => now()->toDateString(),
         ]);
-        return redirect()->back()->with('edit', 'Data berhasil diperbarui');
+        $newMenu->stock -= $request->totalAmount;
+        $newMenu->save();
+    }else{
+        $priceTotal = $newMenu->price * $request->totalAmount;
+        $transaction->update([
+            'customer_id' => $request->customer_id,
+            'menu_id' => $request->menu_id,
+            'totalAmount' => $request->totalAmount,
+            'priceTotal' => $priceTotal,
+            'transactionDate' => now()->toDateString(),
+        ]);
+        $currentMenu->stock += $transaction->totalAmount;
+        $currentMenu->save();
+        $newMenu->stock -= $request->totalAmount;
+        $newMenu->save();
     }
+
+    return redirect()->back()->with('edit', 'Data berhasil diperbarui');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -151,8 +172,16 @@ class TransactionController extends Controller
     public function destroy(transaction $transaction)
     {
         try {
-            $transaction->delete();
-            return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            $menuStock = menu::find($transaction->menu_id);
+            if($transaction->status == 'Unpaid'){
+                $menuStock->stock += $transaction->totalAmount;
+                $menuStock->save();
+                $transaction->delete();
+                return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            }else{
+                $transaction->delete();
+                return redirect()->back()->with('hapus', 'Data berhasil dihapus');
+            }
         } catch (\Exception $e) {
             return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
         }

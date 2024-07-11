@@ -17,6 +17,6 @@ class transaction extends Model
         return $this->belongsTo(customer::class, 'customer_id');
     }
     public function employee(){
-        return $this->belongsTo(employee::class, 'customer_id');
+        return $this->belongsTo(employee::class, 'employee_id');
     }
 }

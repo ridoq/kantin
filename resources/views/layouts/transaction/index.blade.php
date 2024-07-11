@@ -38,7 +38,7 @@
             <button class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-    <h3>Tabel Transaksi Pelanggan</h3>
+    <h3>Tabel Transaksi</h3>
     <!-- Button trigger modal -->
 
     <div class="d-flex justify-content-between mb-5">
@@ -66,7 +66,7 @@
                         @csrf
                         @method('POST')
                         <div class="row">
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-6 mb-3">
                                 <label class="form-label">Nama Pelanggan</label>
                                 <select name="customer_id" class="form-select" required>
                                     @forelse ($customers as $customer)
@@ -76,7 +76,7 @@
                                     @endforelse
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-6 mb-3">
                                 <label class="form-label">Nama Pegawai</label>
                                 <select name="employee_id" class="form-select" required>
                                     @forelse ($employees as $employee)
@@ -86,7 +86,7 @@
                                     @endforelse
                                 </select>
                             </div>
-                            <div class="col-lg-12 mb-3">
+                            <div class="col-lg-6 mb-3">
                                 <label class="form-label">Menu</label>
                                 <select name="menu_id" class="form-select">
                                     @forelse ($menus as $menu)
@@ -158,12 +158,12 @@
                                         <i class="mdi mdi-pencil"></i>
                                     </button>
                                 </div>
-                                <form action="delete/transaction/{{ $transaction->id }}" method="post" class="p-0 m-0">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"><i
-                                            class="mdi mdi-trash-can"></i></button>
-                                </form>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2-{{ $transaction->id }}">
+                                        <i class="mdi mdi-trash-can"></i>
+                                    </button>
+                                </div>
                             </div>
                         </td>
                         @elseif($transaction->status == 'Paid')
@@ -172,12 +172,12 @@
                         </td>
                         @else
                         <td>
-                            <form action="delete/transaction/{{ $transaction->id }}" method="post" class="p-0 m-0">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"><i
-                                        class="mdi mdi-trash-can"></i></button>
-                            </form>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2-{{ $transaction->id }}">
+                                    <i class="mdi mdi-trash-can"></i>
+                                </button>
+                            </div>
                         </td>
                     @endif
                 </tr>
@@ -195,7 +195,7 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="row">
-                                        <div class="col-lg-12 mb-3">
+                                        <div class="col-lg-6 mb-3">
                                             <label class="form-label">Nama Pelanggan</label>
                                             <select name="customer_id" class="form-select">
                                                 @foreach ($customers as $customer)
@@ -206,22 +206,25 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-lg-12 mb-3">
-                                            <label class="form-label">Menu</label>
-                                            <select name="menu_id" class="form-select">
-                                                @forelse ($menus as $menu)
-                                                    <option value="{{ $menu->id }}"
-                                                        {{ $transaction->menu_id == $menu->id ? 'selected' : '' }}>
-                                                        {{ $menu->name }}
+                                        <div class="col-lg-6 mb-3">
+                                            <label class="form-label">Nama Pegawai</label>
+                                            <select name="employee_id" class="form-select">
+                                                @foreach ($employees as $employee)
+                                                    <option value="{{ $employee->id }}"
+                                                        {{ $transaction->employee_id == $employee->id ? 'selected' : '' }}>
+                                                        {{ $employee->name }}
                                                     </option>
-                                                @empty
-                                                    <option hidden>Tidak ada Data</option>
-                                                @endforelse
+                                                @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-12 mb-3">
+                                        <div class="col-lg-6 mb-3">
+                                            <label class="form-label">Menu</label>
+                                            <input type="hidden" value="{{ $transaction->menu_id }}" name="menu_id">
+                                            <input type="text" value="{{ $menu->name . " (stok awal: ". $menu->stock + $transaction->totalAmount .")"}}" disabled class="form-control">
+                                        </div>
+                                        <div class="col-6 mb-3">
                                             <label for="" class="form-label">Jumlah Beli</label>
-                                            <input type="number" value="{{ old('totalAmount') }}" name="totalAmount"
+                                            <input type="number" value="{{ $transaction->totalAmount }}" name="totalAmount"
                                                 placeholder="Jumlah Beli" class="form-control">
                                         </div>
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
@@ -230,6 +233,30 @@
                                     </div>
                                 </form>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal2-{{ $transaction->id }}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Apakah anda yakin?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Apakah anda yakin akan menghapus data ini?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="delete/transaction/{{ $transaction->id }}" method="post" class="p-0 m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                            aria-label="Close">Batal</button>
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
                             </div>
                         </div>
                     </div>

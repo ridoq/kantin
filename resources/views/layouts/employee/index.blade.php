@@ -141,11 +141,11 @@
                                 {{-- end button trigger modal edit --}}
                             </div>
                             {{-- button delete --}}
-                            <form action="delete/employee/{{ $employee->id }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Hapus</button>
-                            </form>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal2-{{ $employee->id }}">
+                                    Hapus
+                                </button>
+
                             {{-- button delete --}}
                         </div>
                     </td>
@@ -188,6 +188,31 @@
                                                 <button type="submit" class="btn btn-primary w-25">Update</button>
                                             </div>
                                         </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="exampleModal2-{{ $employee->id }}" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Apakah anda yakin?</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                {{-- ubahable --}}
+                                <div class="modal-body">
+                                    <p>Apakah anda yakin ingin menghapus data ini?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="delete/employee/{{ $employee->id }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Batal</button>
+                                        <button type="submit" class="btn btn-danger">Hapus</button>
                                     </form>
 
                                 </div>
