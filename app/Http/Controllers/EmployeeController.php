@@ -19,7 +19,7 @@ class EmployeeController extends Controller
         ->orWhereRaw("email like ?", ["%" . $request->search . "%"])
         ->orWhereRaw("address like ?", ["%" . $request->search . "%"])
         ->get();
-        return view('layouts.employee.index', compact('employees'));
+        return view('layouts.employee.index', compact('employees','request'));
     }
 
     /**

@@ -44,8 +44,9 @@
     <div class="d-flex justify-content-between mb-5">
         <form action="" method="GET" class="d-flex w-50 ">
             @csrf
-            <input type="text" name="search" placeholder="cari data" class="form-control">
+            <input type="text" name="search" placeholder="cari data" class="form-control" value="{{ request()->input('search') }}">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
+            <a href="{{ route('payment') }}" class="btn btn-primary ms-3">Refresh</a>
         </form>
     </div>
 
@@ -76,7 +77,7 @@
                         <td>
                             Nama : <span class="fw-bold">{{ $transaction->customer->name }} </span><br>
                             Menu : <span class="fw-bold">{{ $transaction->menu->name }}</span> <br>
-                            Jumlah beli : <span class="fw-bold">{{ $transaction->totalAmount }} </span><br>
+                            Jumlah beli : <span class="fw-bold">{{number_format( $transaction->totalAmount ,0,',','.')}} </span><br>
                             Total harga : <span class="fw-bold text-primary">Rp.
                                 {{ number_format($transaction->priceTotal, 0, ',', '.') }}</span>
                         </td>

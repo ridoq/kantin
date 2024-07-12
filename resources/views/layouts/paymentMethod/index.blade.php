@@ -50,8 +50,9 @@
     <div class="d-flex justify-content-between mb-5">
         <form action="" method="GET" class="d-flex w-50">
             @csrf
-            <input type="text" name="search" class="form-control">
-            <button type="submit" class="btn btn-secondary ms-2">Cari</button>
+            <input type="text" name="search" class="form-control" value="{{ request()->input('search') }}">
+            <button type="submit" class="btn btn-secondary ms-2" >Cari</button>
+            <a href="{{ route('paymentMethod') }}" class="btn btn-primary ms-3">Refresh</a>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createDetail">
             Tambah Data

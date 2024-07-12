@@ -21,7 +21,7 @@ class CustomerController extends Controller
         ->orWhereRaw("email like ?", ["%".$request->search."%"])
         ->orWhereRaw("address like ?", ["%".$request->search."%"])
         ->get();
-        return view('layouts.customer.index', compact('customers'));
+        return view('layouts.customer.index', compact('customers','request'));
     }
 
     /**

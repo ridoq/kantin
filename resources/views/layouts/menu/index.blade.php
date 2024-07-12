@@ -38,8 +38,9 @@
     <div class="d-flex justify-content-between mb-5">
         <form action="" method="GET" class="d-flex w-50">
             @csrf
-            <input type="text" name="search" class="form-control">
+            <input type="text" name="search" class="form-control" value="{{ request()->input('search') }}">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
+            <a href="{{ route('menu') }}" class="btn btn-primary ms-3">Refresh</a>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
@@ -109,7 +110,7 @@
                 <td>Gambar</td>
                 <td>Menu</td>
                 <td>Harga</td>
-                <td>Stock</td>
+                <td>Stock {{ '(item)' }}</td>
                 <td>Kategori Menu</td>
                 <td>aksi</td>
             </tr>
@@ -129,7 +130,7 @@
                         @endif
                     <td>{{ $menu->name }}</td>
                     <td>Rp. {{ number_format($menu->price, 0, ',', '.') }}</td>
-                    <td>{{ $menu->stock }}</td>
+                    <td class="text-primary fw-bold">{{ number_format($menu->stock,0,',','.') }}</td>
                     <td>{{ $menu->category->name }}</td>
                     <td>
                         <div class="d-flex gap-2 align-items-center">

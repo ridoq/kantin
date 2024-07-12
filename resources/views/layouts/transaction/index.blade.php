@@ -44,8 +44,9 @@
     <div class="d-flex justify-content-between mb-5">
         <form action="" method="GET" class="d-flex w-50 ">
             @csrf
-            <input type="text" name="search" placeholder="cari data" class="form-control">
+            <input type="text" name="search" placeholder="cari data" class="form-control" value="{{ request()->input('search') }}">
             <button type="submit" class="btn btn-secondary ms-2">Cari</button>
+            <a href="{{ route('transaction') }}" class="btn btn-primary ms-3">Refresh</a>
         </form>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Tambah Data
@@ -90,7 +91,8 @@
                                 <label class="form-label">Menu</label>
                                 <select name="menu_id" class="form-select">
                                     @forelse ($menus as $menu)
-                                        <option value="{{ $menu->id }}">{{ $menu->name . " (stok : " . $menu->stock .')'}}</option>
+                                        <option value="{{ $menu->id }}">
+                                            {{ $menu->name . ' (stok : ' . $menu->stock . ')' }}</option>
                                     @empty
                                         <option hidden>Tidak ada Data</option>
                                     @endforelse
@@ -121,6 +123,7 @@
                 <td>Nama Menu</td>
                 <td>Total Beli</td>
                 <td>Total Harga</td>
+                <td>Pegawai</td>
                 <td>Tanggal Transaksi</td>
                 <td>Status</td>
                 <td>Aksi</td>
@@ -132,17 +135,20 @@
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $transaction->kode_transaksi }}</td>
                     <td>{{ $transaction->customer->name }}</td>
-                    <td>{{ $transaction->menu->name}}</td>
-                    <td>{{ $transaction->totalAmount }}</td>
+                    <td>{{ $transaction->menu->name }}</td>
+                    <td class="fw-bold text-primary">{{ number_format($transaction->totalAmount,0,',','.') }}</td>
                     <td>Rp. {{ number_format($transaction->priceTotal, 0, ',', '.') }}</td>
+                    <td>{{ $transaction->employee->name }}</td>
                     <td>{{ date('l, d F Y', strtotime($transaction->transactionDate)) }}</td>
                     @if ($transaction->status == 'Unpaid')
                         <td>
-                            <a href="{{ route('payment') }}" class="text-decoration-underline text-warning fw-bold">{{ $transaction->status }}</a>
+                            <a href="{{ route('payment') }}"
+                                class="text-decoration-underline text-warning fw-bold">{{ $transaction->status }}</a>
                         </td>
                     @elseif($transaction->status == 'Paid')
                         <td>
-                            <a href="{{ route('payment') }}" class="text-decoration-underline text-primary fw-bold">{{ $transaction->status }}</a>
+                            <a href="{{ route('payment') }}"
+                                class="text-decoration-underline text-primary fw-bold">{{ $transaction->status }}</a>
                         </td>
                     @else
                         <td>
@@ -166,11 +172,11 @@
                                 </div>
                             </div>
                         </td>
-                        @elseif($transaction->status == 'Paid')
+                    @elseif($transaction->status == 'Paid')
                         <td>
                             -
                         </td>
-                        @else
+                    @else
                         <td>
                             <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -220,12 +226,19 @@
                                         <div class="col-lg-6 mb-3">
                                             <label class="form-label">Menu</label>
                                             <input type="hidden" value="{{ $transaction->menu_id }}" name="menu_id">
-                                            <input type="text" value="{{ $menu->name . " (stok awal: ". $menu->stock + $transaction->totalAmount .")"}}" disabled class="form-control">
+
+                                            @php
+                                                $menuu = app(\App\Models\Menu::class)->where('id', $transaction->menu_id)->first();
+                                            @endphp
+                                               <input type="text"
+                                                   value="{{ $menuu->name . ' (stok awal: ' . $menuu->stock + $transaction->totalAmount . ')' }}"
+                                                   disabled class="form-control" >
+
                                         </div>
                                         <div class="col-6 mb-3">
                                             <label for="" class="form-label">Jumlah Beli</label>
-                                            <input type="number" value="{{ $transaction->totalAmount }}" name="totalAmount"
-                                                placeholder="Jumlah Beli" class="form-control">
+                                            <input type="number" value="{{ $transaction->totalAmount }}"
+                                                name="totalAmount" placeholder="Jumlah Beli" class="form-control">
                                         </div>
                                         <div class="col-lg-12 mb-3 d-flex justify-content-end align-items-center">
                                             <button type="submit" class="btn btn-primary">Update</button>
@@ -245,16 +258,16 @@
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Apakah anda yakin?</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Apakah anda yakin akan menghapus data ini?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <form action="delete/transaction/{{ $transaction->id }}" method="post" class="p-0 m-0">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                            aria-label="Close">Batal</button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Apakah anda yakin akan menghapus data ini?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="delete/transaction/{{ $transaction->id }}" method="post" class="p-0 m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">Batal</button>
                                     <button type="submit" class="btn btn-danger">Hapus</button>
                                 </form>
                             </div>

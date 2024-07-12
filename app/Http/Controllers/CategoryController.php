@@ -15,7 +15,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = category::where('name', 'like', "%$request->search%")->get();
-        return view('layouts.category.index', compact('categories'));
+        return view('layouts.category.index', compact('categories','request'));
     }
 
     /**

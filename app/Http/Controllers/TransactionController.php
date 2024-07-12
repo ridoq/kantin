@@ -27,7 +27,7 @@ class TransactionController extends Controller
         $menus = menu::all();
         $customers = customer::all();
         $employees = employee::all();
-        return view('layouts.transaction.index', compact('transactions','employees', 'customers', 'menus'));
+        return view('layouts.transaction.index', compact('transactions','employees', 'customers', 'menus','request'));
     }
 
     // public function payment(Request $request)
@@ -141,6 +141,7 @@ class TransactionController extends Controller
         $priceTotal = $newMenu->price * $request->totalAmount;
         $transaction->update([
             'customer_id' => $request->customer_id,
+            'employee_id' => $request->employee_id,
             'menu_id' => $request->menu_id,
             'totalAmount' => $request->totalAmount,
             'priceTotal' => $priceTotal,
@@ -174,16 +175,16 @@ class TransactionController extends Controller
         try {
             $menuStock = menu::find($transaction->menu_id);
             if($transaction->status == 'Unpaid'){
+                $transaction->delete();
                 $menuStock->stock += $transaction->totalAmount;
                 $menuStock->save();
-                $transaction->delete();
                 return redirect()->back()->with('add', 'Data berhasil dihapus');
             }else{
                 $transaction->delete();
                 return redirect()->back()->with('add', 'Data berhasil dihapus');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('restrict', 'Data tidak dapat dihapus karena masih terpakai di tabel yang lain.');
+            return redirect()->back()->with('restrict', "Data tidak dapat dihapus karena masih terdaftar pada tabel Pembayaran yang lain.");
         }
     }
 }

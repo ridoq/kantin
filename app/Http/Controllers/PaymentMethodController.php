@@ -16,7 +16,7 @@ class PaymentMethodController extends Controller
     {
         $paymentMethods = paymentMethod::where('method', 'LIKE', "%$request->search%")
             ->get();
-        return view('layouts.paymentMethod.index', compact('paymentMethods'));
+        return view('layouts.paymentMethod.index', compact('paymentMethods','request'));
     }
 
     /**

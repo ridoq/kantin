@@ -25,7 +25,7 @@ class MenuController extends Controller
             ->get();
         $categories = Category::all();
 
-        return view('layouts.menu.index', compact('menus', 'categories'));
+        return view('layouts.menu.index', compact('menus', 'categories','request'));
     }
 
     /**
